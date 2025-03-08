@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Access to word predictability using large language (transformer) models.
+Access to word predictability using large language 'transformer' models.
 }
 \details{
 These options are used to control various aspects of the pangoling package.

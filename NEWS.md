@@ -3,8 +3,6 @@
 - changed the ownership of the repo to ropensci
 - deprecated functions are now defunct and have been replaced with their respective alternative functions
 
-# pangoling (development version)
-
 # pangoling 0.0.0.9011
 
 - Added `word_n` argument in `causal_words_pred()` to indicate word order of the
