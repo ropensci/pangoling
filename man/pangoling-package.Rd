@@ -44,9 +44,9 @@ options(pangoling.verbose = FALSE) # Removes messages
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://bruno.nicenboim.me/pangoling}
-  \item \url{https://github.com/bnicenboim/pangoling}
-  \item Report bugs at \url{https://github.com/bnicenboim/pangoling/issues}
+  \item \url{https://docs.ropensci.org/pangoling}
+  \item \url{https://github.com/ropensci/pangoling}
+  \item Report bugs at \url{https://github.com/ropensci/pangoling/issues}
 }
 
 }

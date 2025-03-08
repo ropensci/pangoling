@@ -3,16 +3,18 @@
   "@type": "SoftwareSourceCode",
   "identifier": "pangoling",
   "description": "Access to word predictability using large language (transformer) models.",
-  "name": "pangoling: Access to Language Model Predictions",
-  "issueTracker": "<https://github.com/bnicenboim/pangoling/issues>",
+  "name": "pangoling: Access to Large Language Model Predictions",
+  "relatedLink": "https://docs.ropensci.org/pangoling",
+  "codeRepository": "https://github.com/ropensci/pangoling",
+  "issueTracker": "https://github.com/ropensci/pangoling/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.0.9000",
+  "version": "1.0.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.2 Patched (2022-11-10 r83330)",
+  "runtimePlatform": "R version 4.4.1 (2024-06-14)",
   "author": [
     {
       "@type": "Person",
@@ -116,6 +118,30 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=spelling"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rstudioapi",
+      "name": "rstudioapi",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rstudioapi"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "brms",
+      "name": "brms",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=brms"
     }
   ],
   "softwareRequirements": {
@@ -201,11 +227,11 @@
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
-      "version": ">= 2.10"
+      "version": ">= 4.1.0"
     },
     "SystemRequirements": null
   },
-  "fileSize": "2061.121KB",
+  "fileSize": "292.05KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -217,9 +243,22 @@
           "familyName": "Nicenboim"
         }
       ],
-      "name": "{pangoling}: {Access} to language model predictions in {R}",
-      "url": "https://github.com/bnicenboim/pangoling",
-      "description": "R package version 0.0.0.9000"
+      "name": "{pangoling}: {Access} to large language model predictions in {R}",
+      "identifier": "10.5281/zenodo.7637526",
+      "url": "https://github.com/ropensci/pangoling",
+      "description": "R package version 1.0.0",
+      "@id": "https://doi.org/10.5281/zenodo.7637526",
+      "sameAs": "https://doi.org/10.5281/zenodo.7637526"
     }
-  ]
+  ],
+  "releaseNotes": "https://github.com/ropensci/pangoling/blob/master/NEWS.md",
+  "readme": "https://github.com/ropensci/pangoling/blob/main/README.md",
+  "contIntegration": ["https://app.codecov.io/gh/ropensci/pangoling?branch=main", "https://github.com/ropensci/pangoling/actions/workflows/R-CMD-check.yaml"],
+  "developmentStatus": ["https://lifecycle.r-lib.org/articles/stages.html#stable", "https://www.repostatus.org/#active"],
+  "review": {
+    "@type": "Review",
+    "url": "https://github.com/ropensci/software-review/issues/575",
+    "provider": "https://ropensci.org"
+  },
+  "keywords": ["nlp", "psycholinguistics", "r", "r-package", "rstats", "transformers"]
 }
