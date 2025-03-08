@@ -406,7 +406,7 @@ word_lp <- function(words,
   if(ncol(mat) != length(index_vocab)) {
     stop2(paste0("Unexpected different length between number of tokens, ",
                  "please open an issue with a reproducible example at ",
-                 "[https://github.com/bnicenboim/pangoling/issues]."))
+                 "[https://github.com/ropensci/pangoling/issues]."))
   }
 
   token_lp <- tidytable::map2_dbl(index_vocab, 

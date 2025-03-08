@@ -4,13 +4,12 @@
 <!-- badges: start -->
 
 [![Codecov test
-coverage](https://codecov.io/gh/bnicenboim/pangoling/branch/main/graph/badge.svg)](https://app.codecov.io/gh/bnicenboim/pangoling?branch=main)
+coverage](https://codecov.io/gh/ropensci/pangoling/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ropensci/pangoling?branch=main)
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![R-CMD-check](https://github.com/bnicenboim/pangoling/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bnicenboim/pangoling/actions/workflows/R-CMD-check.yaml)
-[![Project Status: WIP – Initial development is in progress, but there
-has not yet been a stable, usable release suitable for the
-public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![R-CMD-check](https://github.com/ropensci/pangoling/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/pangoling/actions/workflows/R-CMD-check.yaml)
+[![Project Status:
+active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![DOI](https://zenodo.org/badge/497831295.svg)](https://zenodo.org/badge/latestdoi/497831295)
 [![Status at rOpenSci Software Peer
 Review](https://badges.ropensci.org/575_status.svg)](https://github.com/ropensci/software-review/issues/575)
@@ -41,13 +40,11 @@ website](https://huggingface.co/gpt2).
 
 ## Installation
 
-There is still no released version of `pangoling`. The package is in the
-\*\* early\*\* stages of development, and it will probably be subject to
-changes. To install the latest version from github use:
+There is still no CRAN version of `pangoling`. To install the latest
+version from github use:
 
 ``` r
-# install.packages("remotes") # if needed
-remotes::install_github("bnicenboim/pangoling")
+install.packages("pangoling", repos = "https://ropensci.r-universe.dev")
 ```
 
 `install_py_pangoling` function facilitates the installation of Python
@@ -133,10 +130,27 @@ df_sent
 
 ## How to cite
 
-> Nicenboim B (2023). *pangoling: Access to language model predictions
-> in R*. R package version 0.0.0.9010, DOI:
-> [10.5281/zenodo.7637526](https://zenodo.org/badge/latestdoi/497831295),
-> <https://github.com/bnicenboim/pangoling>.
+``` r
+citation("pangoling")
+Users are encouraged to not only cite pangoling, but also the python
+package transformers. To cite pangoling in publications use:
+
+  Nicenboim B (2023). _pangoling: Access to large language model
+  predictions in R_. doi:10.5281/zenodo.7637526
+  <https://doi.org/10.5281/zenodo.7637526>, R package version
+  0.0.1.0000, <https://github.com/ropensci/pangoling>.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {{pangoling}: {Access} to large language model predictions in {R}},
+    author = {Bruno Nicenboim},
+    year = {2023},
+    note = {R package version 0.0.1.0000},
+    doi = {10.5281/zenodo.7637526},
+    url = {https://github.com/ropensci/pangoling},
+  }
+```
 
 ## How to contribute
 

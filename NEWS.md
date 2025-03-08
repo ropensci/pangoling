@@ -1,40 +1,15 @@
+# pangoling 1.0.0 (first released version)
+
+- changed the ownership of the repo to ropensci
+
+
 # pangoling (development version)
 
-# pangoling 0.0.0.9000
-* First release!
+# pangoling 0.0.0.9011
 
-# pangoling 0.0.0.9001
-* Tons of stuff. Fully functional package now.
-
-# pangoling 0.0.0.9002
-* minor function names to avoid conflict with other packages
-
-# pangoling 0.0.0.9003
-* bug in causal_tokens_lp_tbl fixed
-
-# pangoling 0.0.0.9004
-* Causal models accept batches. 
-
-# pangoling 0.0.0.9005
-* Strings with no tokens no longer throw errors. 
-* Requires correct version of R. 
-
-# pangoling 0.0.0.9006
-* `causal_lp` get a `l_contexts` argument.
-* Checkpoints work for causal models (not yet for masked models).
-* Ropensci badge added.
-
-
-# pangoling 0.0.0.9007
-* `set_cache_folder()` function added.
-* Message when the package loads.
-* New troubleshooting vignette.
-
-# pangoling 0.0.0.9008
-* Fix a bug when  `.by` is unordered
-
-# pangoling 0.0.0.9009
-* Deprecated `.by` in favor of `by`.
+- Added `word_n` argument in `causal_words_pred()` to indicate word order of the
+  texts.
+- Allows for models with larger vocabulary than tokenizer.
 
 # pangoling 0.0.0.9010
 
@@ -75,8 +50,40 @@ via the `decode` parameter.
 - Deprecated `masked_tokens_tbl()` and `masked_lp()`. Use 
 `masked_tokens_pred_tbl()` and `masked_targets_pred()` instead.
 
+# pangoling 0.0.0.9009
+* Deprecated `.by` in favor of `by`.
 
-# pangoling 0.0.0.9011
+# pangoling 0.0.0.9008
+* Fix a bug when  `.by` is unordered
 
-- Added `word_n` argument in `causal_words_pred()` to indicate word order of teh texts.
-- Allows for models with larger vocabulary than tokenizer.
+# pangoling 0.0.0.9007
+* `set_cache_folder()` function added.
+* Message when the package loads.
+* New troubleshooting vignette.
+
+# pangoling 0.0.0.9006
+* `causal_lp` get a `l_contexts` argument.
+* Checkpoints work for causal models (not yet for masked models).
+* Ropensci badge added.
+
+# pangoling 0.0.0.9005
+* Strings with no tokens no longer throw errors. 
+* Requires correct version of R. 
+
+# pangoling 0.0.0.9004
+* Causal models accept batches. 
+
+# pangoling 0.0.0.9003
+* bug in causal_tokens_lp_tbl fixed
+
+# pangoling 0.0.0.9002
+* minor function names to avoid conflict with other packages
+
+# pangoling 0.0.0.9001
+* Tons of stuff. Fully functional package now.
+
+# pangoling 0.0.0.9000
+* First release!
+
+
+

@@ -14,10 +14,10 @@ knitr::opts_chunk$set(
 # pangoling <a href="http://bruno.nicenboim.me/pangoling/"><img src="man/figures/logo.png" align="right" height="139" /></a>
 
 <!-- badges: start -->
-[![Codecov test coverage](https://codecov.io/gh/bnicenboim/pangoling/branch/main/graph/badge.svg)](https://app.codecov.io/gh/bnicenboim/pangoling?branch=main)
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
- [![R-CMD-check](https://github.com/bnicenboim/pangoling/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bnicenboim/pangoling/actions/workflows/R-CMD-check.yaml)
-[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![Codecov test coverage](https://codecov.io/gh/ropensci/pangoling/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ropensci/pangoling?branch=main)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+ [![R-CMD-check](https://github.com/ropensci/pangoling/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/pangoling/actions/workflows/R-CMD-check.yaml)
+[![Project Status: active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![DOI](https://zenodo.org/badge/497831295.svg)](https://zenodo.org/badge/latestdoi/497831295)
 [![Status at rOpenSci Software Peer Review](https://badges.ropensci.org/575_status.svg)](https://github.com/ropensci/software-review/issues/575)
 <!-- badges: end -->
@@ -40,11 +40,10 @@ The training data of the most popular models (such as GPT-2) haven't been releas
 
 ## Installation
 
-There is still no released version of `pangoling`. The package is in the ** early** stages of development, and it will probably be subject to changes. To install the latest version from github use:
+There is still no CRAN version of `pangoling`. To install the latest version from github use:
 
 ```{r, eval = FALSE}
-# install.packages("remotes") # if needed
-remotes::install_github("bnicenboim/pangoling")
+install.packages("pangoling", repos = "https://ropensci.r-universe.dev")
 ```
 
 `install_py_pangoling` function facilitates the installation of Python packages needed for using pangoling within an R environment, using the `reticulate` package for managing Python environments. This needs to be done once.
@@ -82,11 +81,9 @@ df_sent
 
 ## How to cite
 
-> Nicenboim B (2023). _pangoling: Access to
->  language model predictions in R_. R package
->  version `r packageVersion("pangoling")`,
->  DOI: [10.5281/zenodo.7637526](https://zenodo.org/badge/latestdoi/497831295),
->  <https://github.com/bnicenboim/pangoling>.
+```{r, comment = NA }
+citation("pangoling")
+```
 
 ## How to contribute
 
