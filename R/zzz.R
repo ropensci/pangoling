@@ -48,7 +48,7 @@ torch <- NULL
                         " version ",
                         utils::packageVersion(pkgname),
                         "\nAn introduction to the package can be found in ",
-                        "https://bruno.nicenboim.me/pangoling/articles/\n",
+                        "https://docs.ropensci.org/pangoling/articles/\n",
                         "Notice that pretrained models and tokenizers are ",
                         "downloaded from https://huggingface.co/ the first ",
                         "time they are used.\n",

@@ -76,7 +76,7 @@ for details. In case of errors check the status of
 \section{More examples}{
 
 See the
-\href{https://bruno.nicenboim.me/pangoling/articles/intro-bert.html}{online article}
+\href{https://docs.ropensci.org/pangoling/articles/intro-bert.html}{online article}
 in pangoling website for more examples.
 }
 

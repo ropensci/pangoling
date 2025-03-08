@@ -1,7 +1,6 @@
-# pangoling 1.0.0 (first released version)
+# pangoling 1.0.0
 
 - changed the ownership of the repo to ropensci
-
 
 # pangoling (development version)
 

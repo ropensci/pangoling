@@ -1,45 +1,45 @@
-Package: pangoling
 Type: Package
+Package: pangoling
 Title: Access to Large Language Model Predictions
 Version: 1.0.0
 Authors@R: c(
-    person("Bruno", "Nicenboim",
-    email = "bruno.nicenboim@gmail.com",
-    role = c( "aut","cre"),
-    comment = c(ORCID = "0000-0002-5176-3943")),
+    person("Bruno", "Nicenboim", , "bruno.nicenboim@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-5176-3943")),
     person("Chris", "Emmerly", role = "ctb"),
     person("Giovanni", "Cassani", role = "ctb"),
     person("Lisa", "Levinson", role = "rev"),
     person("Utku", "Turk", role = "rev")
-    )
-Description: Access to word predictability using large language (transformer) models.
-URL: https://docs.ropensci.org/pangoling, https://github.com/ropensci/pangoling 
-BugReports: https://github.com/ropensci/pangoling/issues
+  )
+Description: Access to word predictability using large language
+    (transformer) models.
 License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: true
+URL: https://docs.ropensci.org/pangoling, https://github.com/ropensci/pangoling
+BugReports: https://github.com/ropensci/pangoling/issues
+Depends: 
+    R (>= 4.1.0)
 Imports:
+    cachem,
     data.table,
     memoise,
     reticulate,
+    rstudioapi,
+    stats,
     tidyselect,
     tidytable (>= 0.7.2),
-    utils,
-    cachem
+    utils
 Suggests: 
-    rmarkdown,
+    brms,
     knitr,
+    parallel,
+    rmarkdown,
+    spelling,
     testthat (>= 3.0.0),
     tictoc,
-    covr,
-    spelling,
-    rstudioapi,
-    brms
+    covr
 Config/testthat/edition: 3
-RoxygenNote: 7.3.1
-Roxygen: list(markdown = TRUE)
-Depends: 
-    R (>= 4.1.0)
-# VignetteBuilder: knitr
-StagedInstall: yes
+Encoding: UTF-8
 Language: en-US
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+StagedInstall: yes

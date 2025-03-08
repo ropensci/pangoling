@@ -19,3 +19,4 @@ _test
 README_cache
 ^.covrignore$
 REVIEW.md
+^dev$

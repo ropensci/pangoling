@@ -73,7 +73,7 @@
 #' \emph{The subject-relative advantage in Chinese: Evidence for 
 #' expectation-based processing}.
 #' Journal of Memory and Language, 79–80, 97-120. 
-#' \url{https://doi.org/10.1016/j.jml.2014.10.005}
+#' \doi{10.1016/j.jml.2014.10.005}
 #' @family datasets
 #' @usage data(df_jaeger14)
 #' @examples

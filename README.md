@@ -1,5 +1,5 @@
 
-# pangoling <a href="http://bruno.nicenboim.me/pangoling/"><img src="man/figures/logo.png" align="right" height="139" /></a>
+# pangoling <a href="https://docs.ropensci.org/pangoling/"><img src="man/figures/logo.png" align="right" height="139" /></a>
 
 <!-- badges: start -->
 
