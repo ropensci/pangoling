@@ -26,8 +26,9 @@
 #'session.
 #'
 #'
-#' @examplesIf interactive()
+#' @examples
 #' options(pangoling.verbose = FALSE) # Removes messages
+#' options(pangoling.verbose = TRUE) # Show messages 
 "_PACKAGE"
 
 

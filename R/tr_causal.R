@@ -203,7 +203,7 @@ causal_next_tokens_pred_tbl <-
 #'   every token in one or more sentences.
 #'
 #' See the
-#' [online article](https://bruno.nicenboim.me/pangoling/articles/intro-gpt2.html)
+#' [online article](https://docs.ropensci.org/pangoling/articles/intro-gpt2.html)
 #' in pangoling website for more examples.
 #' 
 #' @param x A character vector of words, phrases, or texts to evaluate.

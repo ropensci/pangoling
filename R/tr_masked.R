@@ -75,7 +75,7 @@ masked_config <- function(model = getOption("pangoling.masked.default"),
 #'
 #' @section More examples:
 #' See the
-#' [online article](https://bruno.nicenboim.me/pangoling/articles/intro-bert.html)
+#' [online article](https://docs.ropensci.org/pangoling/articles/intro-bert.html)
 #' in pangoling website for more examples.
 #'
 #'
@@ -157,7 +157,7 @@ masked_tokens_pred_tbl <-
 #'
 #' @section More examples:
 #' See the
-#' [online article](https://bruno.nicenboim.me/pangoling/articles/intro-bert.html)
+#' [online article](https://docs.ropensci.org/pangoling/articles/intro-bert.html)
 #' in pangoling website for more examples.
 #'
 #'

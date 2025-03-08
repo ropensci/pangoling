@@ -1,9 +1,7 @@
-# pangoling 1.0.0 (first released version)
+# pangoling 1.0.0
 
 - changed the ownership of the repo to ropensci
-
-
-# pangoling (development version)
+- deprecated functions are now defunct and have been replaced with their respective alternative functions
 
 # pangoling 0.0.0.9011
 

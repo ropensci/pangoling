@@ -131,7 +131,7 @@ every token in one or more sentences.
 }
 
 See the
-\href{https://bruno.nicenboim.me/pangoling/articles/intro-gpt2.html}{online article}
+\href{https://docs.ropensci.org/pangoling/articles/intro-gpt2.html}{online article}
 in pangoling website for more examples.
 }
 \section{More details about causal models}{
