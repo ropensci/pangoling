@@ -37,9 +37,8 @@ Use \verb{options(pangoling.<option> = <value>)} to set these options in your
 session.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 options(pangoling.verbose = FALSE) # Removes messages
-\dontshow{\}) # examplesIf}
+options(pangoling.verbose = TRUE) # Show messages 
 }
 \seealso{
 Useful links:

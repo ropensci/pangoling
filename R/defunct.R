@@ -10,6 +10,7 @@ NULL
 #' @name masked_tokens_tbl-defunct
 #' @seealso \code{\link{pangoling-defunct}}
 #' @keywords internal
+#' @return This function is defunct and returns an error.
 NULL
 
 #' @rdname pangoling-defunct
@@ -25,6 +26,7 @@ masked_tokens_tbl <- function(...) {
 #' @name masked_lp-defunct
 #' @seealso \code{\link{pangoling-defunct}}
 #' @keywords internal
+#' @return This function is defunct and returns an error.
 NULL
 
 #' @rdname pangoling-defunct
@@ -40,11 +42,13 @@ masked_lp <- function(...) {
 #' @name causal_next_tokens_tbl-defunct
 #' @seealso \code{\link{pangoling-defunct}}
 #' @keywords internal
+#' @return This function is defunct and returns an error.
 NULL
 
 #' @rdname pangoling-defunct
 #' @section \code{causal_next_tokens_tbl}:
 #' For \code{causal_next_tokens_tbl}, use \code{\link{causal_next_tokens_pred_tbl}}.
+#' @return This function is defunct and returns an error.
 #' @export
 causal_next_tokens_tbl <- function(...) {
   .Defunct(new = "causal_next_tokens_pred_tbl()")
@@ -55,6 +59,7 @@ causal_next_tokens_tbl <- function(...) {
 #' @name causal_lp-defunct
 #' @seealso \code{\link{pangoling-defunct}}
 #' @keywords internal
+#' @return This function is defunct and returns an error.
 NULL
 
 #' @rdname pangoling-defunct
@@ -70,6 +75,7 @@ causal_lp <- function(...) {
 #' @name causal_tokens_lp_tbl-defunct
 #' @seealso \code{\link{pangoling-defunct}}
 #' @keywords internal
+#' @return This function is defunct and returns an error.
 NULL
 
 #' @rdname pangoling-defunct
@@ -85,6 +91,7 @@ causal_tokens_lp_tbl <- function(...) {
 #' @name causal_lp_mats-defunct
 #' @seealso \code{\link{pangoling-defunct}}
 #' @keywords internal
+#' @return This function is defunct and returns an error.
 NULL
 
 #' @rdname pangoling-defunct
