@@ -130,7 +130,7 @@ selection), see Section 4.2 and Chapter 5 of @nicenboim2025introduction,
 
 
 
-```{r brms, message = FALSE}
+```{r brms, message = FALSE, results = "hide"}
 fit_surp <-
   brm(rt ~ surprisal + (surprisal| subject) + (surprisal| item),
       data = df_jaeger14,
