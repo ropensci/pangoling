@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">pangoling</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +53,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/bnicenboim/pangoling/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/ropensci/pangoling/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -69,7 +69,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Using a GPT2 transformer model to get word predictability</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/bnicenboim/pangoling/blob/main/vignettes/articles/intro-gpt2.Rmd" class="external-link"><code>vignettes/articles/intro-gpt2.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ropensci/pangoling/blob/main/vignettes/articles/intro-gpt2.Rmd" class="external-link"><code>vignettes/articles/intro-gpt2.Rmd</code></a></small>
       <div class="d-none name"><code>intro-gpt2.Rmd</code></div>
     </div>
 
@@ -97,7 +97,7 @@ Radford et al. 2019)</span>.</p>
 from the models.</p>
 <p>Load the following packages first:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bruno.nicenboim.me/pangoling" class="external-link">pangoling</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/pangoling">pangoling</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://markfairbanks.github.io/tidytable/" class="external-link">tidytable</a></span><span class="op">)</span> <span class="co"># fast alternative to dplyr</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jabiru/tictoc" class="external-link">tictoc</a></span><span class="op">)</span> <span class="co"># measure time</span></span></code></pre></div>
 <p>Then let’s examine which continuation GPT-2 predicts following a
@@ -128,7 +128,7 @@ from the”.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Ġtop    -<span style="color: #BB0000;">5.36</span> </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 50,247 more rows</span></span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 4.54 sec elapsed</span></span></code></pre></div>
+<span><span class="co">#&gt; 4.709 sec elapsed</span></span></code></pre></div>
 <p>(The pretrained models and tokenizers will be downloaded from <a href="https://huggingface.co/" class="external-link uri">https://huggingface.co/</a>
 the first time they are used.)</p>
 <p>The most likely continuation is “tree”, which makes sense. The first
@@ -156,7 +156,7 @@ the same session are much faster. We can also preload a model with
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Ġtop    -<span style="color: #BB0000;">5.36</span> </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 50,247 more rows</span></span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 0.156 sec elapsed</span></span></code></pre></div>
+<span><span class="co">#&gt; 0.202 sec elapsed</span></span></code></pre></div>
 <p>Notice that the tokens–that is, the way GPT-2 interprets words– that
 are predicted start with <code>Ġ</code>, this indicates that they are
 not the first word of a sentence.</p>

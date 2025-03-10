@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">pangoling</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +53,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/bnicenboim/pangoling/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/ropensci/pangoling/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -69,7 +69,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Using a Bert model to get the predictability of words in their context</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/bnicenboim/pangoling/blob/main/vignettes/articles/intro-bert.Rmd" class="external-link"><code>vignettes/articles/intro-bert.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ropensci/pangoling/blob/main/vignettes/articles/intro-bert.Rmd" class="external-link"><code>vignettes/articles/intro-bert.Rmd</code></a></small>
       <div class="d-none name"><code>intro-bert.Rmd</code></div>
     </div>
 
@@ -86,7 +86,7 @@ of a mask in a sentence. BERT is an example of a masked language model
 <span class="citation">(see also Devlin et al. 2018)</span>.</p>
 <p>First load the following packages:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bruno.nicenboim.me/pangoling" class="external-link">pangoling</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/pangoling">pangoling</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://markfairbanks.github.io/tidytable/" class="external-link">tidytable</a></span><span class="op">)</span> <span class="co"># fast alternative to dplyr</span></span></code></pre></div>
 <p>Notice the following potential pitfall. This would be a
 <strong>bad</strong> approach for making predictions in a masked

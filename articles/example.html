@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">pangoling</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +53,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/bnicenboim/pangoling/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/ropensci/pangoling/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -69,7 +69,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Worked-out example: Surprisal from a causal (GPT) model as a cognitive processing bottleneck in reading</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/bnicenboim/pangoling/blob/main/vignettes/articles/example.Rmd" class="external-link"><code>vignettes/articles/example.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ropensci/pangoling/blob/main/vignettes/articles/example.Rmd" class="external-link"><code>vignettes/articles/example.Rmd</code></a></small>
       <div class="d-none name"><code>example.Rmd</code></div>
     </div>
 
@@ -107,7 +107,7 @@ word-by-word to participants during a self-paced reading experiment.</p>
 </h3>
 <p>We load the required libraries first.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bruno.nicenboim.me/pangoling" class="external-link">pangoling</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/pangoling">pangoling</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://markfairbanks.github.io/tidytable/" class="external-link">tidytable</a></span><span class="op">)</span> <span class="co"># Lightweight and faster alternative to dplyr</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jabiru/tictoc" class="external-link">tictoc</a></span><span class="op">)</span>  <span class="co"># Report the time that a piece of code takes</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/paul-buerkner/brms" class="external-link">brms</a></span><span class="op">)</span> <span class="co"># Bayesian regression models in Stan</span></span>
@@ -341,7 +341,7 @@ spaces.</li>
 <span><span class="co">#&gt; `縣長候選人質疑了那位昨天作家採訪了兩個小時的記者而且揚言報復。`</span></span>
 <span><span class="co">#&gt; ***</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 22.741 sec elapsed</span></span></code></pre></div>
+<span><span class="co">#&gt; 20.919 sec elapsed</span></span></code></pre></div>
 <p>Inspect the calculated surprisal values:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_stim</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
@@ -405,7 +405,7 @@ Bayesian Data Analysis for Cognitive Science</em></a>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://paulbuerkner.com/brms/reference/posterior_summary.html" class="external-link">posterior_summary</a></span><span class="op">(</span><span class="va">fit_surp</span>, variable <span class="op">=</span> <span class="st">"b_surprisal"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                Estimate   Est.Error        Q2.5       Q97.5</span></span>
-<span><span class="co">#&gt; b_surprisal 0.007087394 0.001157347 0.004751983 0.009353576</span></span></code></pre></div>
+<span><span class="co">#&gt; b_surprisal 0.007081414 0.001142024 0.004806413 0.009254949</span></span></code></pre></div>
 <p>The conditional effects of surprisal on the original millisecond
 scale can be plotted as well:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -441,7 +441,7 @@ American Chapter of the Association for Computational Linguistics</em>.
 Jäger, Lena, Zhong Chen, Qiang Li, Chien-Jer Charles Lin, and Shravan
 Vasishth. 2015. <span>“The Subject-Relative Advantage in Chinese:
 Evidence for Expectation-Based Processing.”</span> <em>Journal of Memory
-and Language</em> 79-80: 97–120. https://doi.org/<a href="https://doi.org/10.1016/j.jml.2014.10.005" class="external-link">https://doi.org/10.1016/j.jml.2014.10.005</a>.
+and Language</em> 79-80: 97–120. <a href="https://doi.org/10.1016/j.jml.2014.10.005" class="external-link">https://doi.org/10.1016/j.jml.2014.10.005</a>.
 </div>
 <div id="ref-levy2008" class="csl-entry">
 Levy, Roger. 2008. <span>“Expectation-Based Syntactic
