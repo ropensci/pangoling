@@ -6,6 +6,7 @@ _test
 ^README\.Rmd$
 ^README\.html$
 ^cache$
+^figure
 ^test_*
 ^extdata$
 ^data-raw$
@@ -17,6 +18,7 @@ _test
 ^vignettes/articles$
 ^codemeta\.json$
 ^inst/.auctex-auto$
+^vignettes/precompile.R$
 README_cache
 ^.covrignore$
 REVIEW.md

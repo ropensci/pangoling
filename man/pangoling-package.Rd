@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Access to word predictability using large language 'transformer' models.
+Provides access to word predictability estimates using large language models (LLMs) based on 'transformer' architectures via integration with the 'Hugging Face' ecosystem. The package interfaces with pre-trained neural networks and supports both causal/auto-regressive LLMs (e.g., 'GPT-2'; Radford et al., 2019) and masked/bidirectional LLMs (e.g., 'BERT'; Devlin et al., 2019, \doi{10.48550/arXiv.1810.04805}) to compute the probability of words, phrases, or tokens given their linguistic context. By enabling a straigh-forward estimation of word predictability, the package facilitates research in psycholinguistics, computational linguistics, and natural language processing (NLP).
 }
 \details{
 These options are used to control various aspects of the pangoling package.
