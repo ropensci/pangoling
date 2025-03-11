@@ -1,6 +1,6 @@
 ---
 title: "Worked-out example: Surprisal from a causal (GPT) model as a cognitive processing bottleneck in reading"
-bibliography: '/home/bruno/dev/pangoling/inst/REFERENCES.bib'
+bibliography: '`r system.file("REFERENCES.bib", package="pangoling")`'
 vignette: >
   %\VignetteIndexEntry{Worked-out example: Surprisal from a causal (GPT) model as a cognitive processing bottleneck in reading}
   %\VignetteEngine{knitr::rmarkdown}

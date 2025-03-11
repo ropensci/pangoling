@@ -1,6 +1,6 @@
 ---
 title: "Using a Bert model to get the predictability of words in their context"
-bibliography: '/home/bruno/dev/pangoling/inst/REFERENCES.bib'
+bibliography: '`r system.file("REFERENCES.bib", package="pangoling")`'
 vignette: >
   %\VignetteIndexEntry{Using a Bert model to get the predictability of words in their context}
   %\VignetteEngine{knitr::rmarkdown}
