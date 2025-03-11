@@ -1,9 +1,12 @@
-citHeader("Users are encouraged to not only cite pangoling, but also the python package transformers. To cite pangoling in publications use:")
+citHeader("Users are encouraged to not only cite pangoling, but also the python package `transformers` (and the specific LLM they are using):")
 
+if (is.null(meta[["Date/Publication"]])) {
+    meta["Date/Publication"] <- format(Sys.time(), "%Y")
+}
 
-#year <- sub("-.*", "", meta$Date)
-year <- 2025
+year <- meta["Date/Publication"]
 note <- sprintf("R package version %s", meta$Version)
+
 bibentry(bibtype = "Manual",
          title = "{pangoling}: {Access} to large language model predictions in {R}",
          author = c(person("Bruno", "Nicenboim")),
@@ -15,3 +18,13 @@ bibentry(bibtype = "Manual",
   " pangoling: Access to language model predictions in R. ",
   note, ".",
   " https://github.com/ropensci/pangoling")
+
+bibentry(bibtype = "misc",
+      title="{HuggingFace's Transformers}: State-of-the-art Natural Language Processing", 
+      author="Thomas Wolf and Lysandre Debut and Victor Sanh and Julien Chaumond and Clement Delangue and Anthony Moi and Pierric Cistac and Tim Rault and Rémi Louf and Morgan Funtowicz and Joe Davison and Sam Shleifer and Patrick von Platen and Clara Ma and Yacine Jernite and Julien Plu and Canwen Xu and Teven Le Scao and Sylvain Gugger and Mariama Drame and Quentin Lhoest and Alexander M. Rush",
+      year="2020",
+      eprint="1910.03771",
+      archivePrefix="arXiv",
+      primaryClass="cs.CL",
+      url="https://arxiv.org/abs/1910.03771" 
+)

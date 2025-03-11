@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Provides access to word predictability estimates using large language models (LLMs) based on 'transformer' architectures via integration with the 'Hugging Face' ecosystem. The package interfaces with pre-trained neural networks and supports both causal/auto-regressive LLMs (e.g., 'GPT-2'; Radford et al., 2019) and masked/bidirectional LLMs (e.g., 'BERT'; Devlin et al., 2019, \doi{10.48550/arXiv.1810.04805}) to compute the probability of words, phrases, or tokens given their linguistic context. By enabling a straigh-forward estimation of word predictability, the package facilitates research in psycholinguistics, computational linguistics, and natural language processing (NLP).
+Provides access to word predictability estimates using large language models (LLMs) based on 'transformer' architectures via integration with the 'Hugging Face' ecosystem. The package interfaces with pre-trained neural networks and supports both causal/auto-regressive LLMs (e.g., 'GPT-2'; Radford et al., 2019) and masked/bidirectional LLMs (e.g., 'BERT'; Devlin et al., 2019, \doi{10.48550/arXiv.1810.04805}) to compute the probability of words, phrases, or tokens given their linguistic context. By enabling a straighforward estimation of word predictability, the package facilitates research in psycholinguistics, computational linguistics, and natural language processing (NLP).
 }
 \details{
 These options are used to control various aspects of the pangoling package.
@@ -50,7 +50,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Bruno Nicenboim \email{bruno.nicenboim@gmail.com} (\href{https://orcid.org/0000-0002-5176-3943}{ORCID})
+\strong{Maintainer}: Bruno Nicenboim \email{b.nicenboim@tilburguniversity.edu} (\href{https://orcid.org/0000-0002-5176-3943}{ORCID})
 
 Other contributors:
 \itemize{
