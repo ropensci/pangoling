@@ -6,7 +6,7 @@
 ### Other changes
 - Informative startup message if python dependencies not installed.
 - Documentation examples won't run if python dependencies not installed
-- Articles are now precomputed vignettes. See
+- Articles are now pre-computed vignettes. See
 
 # pangoling 1.0.0
 
@@ -33,11 +33,11 @@ tokens, replacing `causal_lp()` and `causal_tokens_lp_tbl()`.
 retrieving possible tokens and their log probabilities.
 - Introduced `masked_targets_pred()`, replacing `masked_lp()`, for calculating 
 predictability based on left and right context.
-- Introduced `transformer_vocab()` with an optional `decode` parameter to return decoded tokenized words.
+- Introduced `transformer_vocab()` with an optional `decode` parameter to return
+decoded tokenized words.
 - **New dataset `df_jaeger14`**: Self-paced reading data on Chinese relative 
 clauses.
-- **New dataset `df_sent`**: Example dataset with two word-by-word tokenized 
-sentences.
+- **New dataset `df_sent`**: Example dataset with two word-by-word sentences.
 - **New vignette**: Added a worked-out example of a causal model.
 
 ## Enhancements:

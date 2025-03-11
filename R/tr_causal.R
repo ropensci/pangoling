@@ -240,9 +240,9 @@ causal_next_tokens_pred_tbl <-
 #' @examplesIf installed_py_pangoling()
 #' # Using causal_targets_pred
 #' causal_targets_pred(
-#'   targets = c("tree.", "cover."),
 #'   contexts = c("The apple doesn't fall far from the",
 #'                "Don't judge a book by its"),
+#'   targets = c("tree.", "cover."),
 #'   model = "gpt2"
 #' )
 #'
@@ -625,8 +625,8 @@ causal_pred_mats <- function(x,
 
 #' @export
 #' @rdname causal_predictability
-causal_targets_pred <- function(targets,
-                                contexts = NULL,
+causal_targets_pred <- function(contexts,
+                                targets,
                                 sep = " ",
                                 log.p = getOption("pangoling.log.p"),
                                 ignore_regex = "",

@@ -38,8 +38,10 @@ A list with tokens
 Tokenize a string or token ids.
 }
 \examples{
+\dontshow{if (installed_py_pangoling()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 tokenize_lst(x = c("The apple doesn't fall far from the tree."), 
              model = "gpt2")
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other token-related functions: 

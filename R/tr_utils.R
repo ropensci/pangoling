@@ -33,7 +33,7 @@ transformer_vocab <- function(model = getOption("pangoling.causal.default"),
 #' @inheritParams causal_next_tokens_pred_tbl
 #' @return A list with tokens
 #'
-#' @examples
+#' @examplesIf installed_py_pangoling()
 #' tokenize_lst(x = c("The apple doesn't fall far from the tree."), 
 #'              model = "gpt2")
 #' @family token-related functions

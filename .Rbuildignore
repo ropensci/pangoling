@@ -5,6 +5,8 @@ _test
 ^README\.md$
 ^README\.Rmd$
 ^README\.html$
+figure$
+^cache$
 ^test_*
 ^extdata$
 ^data-raw$
@@ -22,3 +24,4 @@ REVIEW.md
 ^dev$
 ^doc$
 ^Meta$
+^cran-comments\.md$

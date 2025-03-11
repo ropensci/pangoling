@@ -28,7 +28,7 @@ named entity recognition, question answering, etc.
 A causal language model (also called GPT-like, auto-regressive, or decoder 
 model) is a type of large language model usually used for text-generation that 
 can predict the next word (or more accurately, the next token) based on a 
-preceding context. GPT-2 (Generative Pre-trained Transformer 2) developed by [OpenAI](https://openai.com/) is an example of a causal language model 
+preceding context. GPT-2 (Generative Pre-trained Transformer 2) developed by OpenAI  is an example of a causal language model 
 [see also @radford2019language].
 
 One interesting side-effect of causal language models is that the (log) 

@@ -34,8 +34,8 @@ causal_tokens_pred_lst(
 )
 
 causal_targets_pred(
+  contexts,
   targets,
-  contexts = NULL,
   sep = " ",
   log.p = getOption("pangoling.log.p"),
   ignore_regex = "",
@@ -97,9 +97,9 @@ ones are padded with placeholder tokens.}
 
 \item{texts}{A vector or list of sentences or paragraphs.}
 
-\item{targets}{A character vector of target words or phrases.}
-
 \item{contexts}{A character vector of contexts corresponding to each target.}
+
+\item{targets}{A character vector of target words or phrases.}
 }
 \value{
 For \code{causal_targets_pred()} and \code{causal_words_pred()},
@@ -164,9 +164,9 @@ In case of errors when a new model is run, check the status of
 \dontshow{if (installed_py_pangoling()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Using causal_targets_pred
 causal_targets_pred(
-  targets = c("tree.", "cover."),
   contexts = c("The apple doesn't fall far from the",
                "Don't judge a book by its"),
+  targets = c("tree.", "cover."),
   model = "gpt2"
 )
 

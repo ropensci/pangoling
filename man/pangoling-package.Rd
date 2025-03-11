@@ -43,7 +43,7 @@ options(pangoling.verbose = TRUE) # Show messages
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://docs.ropensci.org/pangoling}
+  \item \url{https://docs.ropensci.org/pangoling/}
   \item \url{https://github.com/ropensci/pangoling}
   \item Report bugs at \url{https://github.com/ropensci/pangoling/issues}
 }
