@@ -2,7 +2,7 @@ citHeader("Users are encouraged to not only cite pangoling, but also the python 
 
 
 #year <- sub("-.*", "", meta$Date)
-year <- 2023
+year <- 2025
 note <- sprintf("R package version %s", meta$Version)
 bibentry(bibtype = "Manual",
          title = "{pangoling}: {Access} to large language model predictions in {R}",
