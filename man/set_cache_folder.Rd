@@ -26,9 +26,11 @@ If none of these environment variables are set, it provides the user with
 information on the default cache directory.
 }
 \examples{
+\dontshow{if (installed_py_pangoling()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \dontrun{
 set_cache_folder("~/new_cache_dir")
 }
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \href{https://huggingface.co/docs/transformers/installation?highlight=transformers_cache#cache-setup}{Installation docs}

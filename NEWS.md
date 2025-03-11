@@ -1,3 +1,13 @@
+# pangoling 1.0.1
+
+### New Features
+- Added `installed_py_pangoling()` to check if required Python dependencies (`transformers` and `torch`) are installed.
+
+### Other changes
+- Informative startup message if python dependencies not installed.
+- Documentation examples won't run if python dependencies not installed
+- Articles are now precomputed vignettes. See
+
 # pangoling 1.0.0
 
 - changed the ownership of the repo to ropensci

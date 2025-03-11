@@ -94,6 +94,7 @@ in pangoling website for more examples.
 }
 
 \examples{
+\dontshow{if (installed_py_pangoling()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 masked_targets_pred(
   prev_contexts = c("The", "The"),
   targets = c("apple", "pear"),
@@ -103,7 +104,7 @@ masked_targets_pred(
   ),
   model = "bert-base-uncased"
 )
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other masked model functions: 

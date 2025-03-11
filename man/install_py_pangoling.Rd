@@ -62,10 +62,10 @@ version control. If a new environment is created, existing environments with
 the same name are removed.
 }
 \examples{
-\dontrun{
+
 # Install with default settings:
-install_py_pangoling()
-}
+# install_py_pangoling()
+
 
 }
 \seealso{

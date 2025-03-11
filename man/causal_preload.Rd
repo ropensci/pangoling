@@ -63,8 +63,9 @@ In case of errors when a new model is run, check the status of
 }
 
 \examples{
+\dontshow{if (installed_py_pangoling()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 causal_preload(model = "gpt2")
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other causal model helper functions: 
