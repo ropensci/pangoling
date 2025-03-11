@@ -5,8 +5,8 @@ _test
 ^README\.md$
 ^README\.Rmd$
 ^README\.html$
-figure$
 ^cache$
+^figure
 ^test_*
 ^extdata$
 ^data-raw$
@@ -18,6 +18,7 @@ figure$
 ^vignettes/articles$
 ^codemeta\.json$
 ^inst/.auctex-auto$
+^vignettes/precompile.R$
 README_cache
 ^.covrignore$
 REVIEW.md
@@ -25,3 +26,4 @@ REVIEW.md
 ^doc$
 ^Meta$
 ^cran-comments\.md$
+^CRAN-SUBMISSION$

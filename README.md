@@ -133,23 +133,22 @@ df_sent
 ``` r
 citation("pangoling")
 Users are encouraged to not only cite pangoling, but also the python
-package transformers. To cite pangoling in publications use:
+package `transformers` (and the specific LLM they are using):
 
-  Nicenboim B (2023). _pangoling: Access to large language model
+  Nicenboim B (2025). _pangoling: Access to large language model
   predictions in R_. doi:10.5281/zenodo.7637526
   <https://doi.org/10.5281/zenodo.7637526>, R package version 1.0.1,
   <https://github.com/ropensci/pangoling>.
 
-A BibTeX entry for LaTeX users is
+  Wolf T, Debut L, Sanh V, Chaumond J, Delangue C, Moi A, Cistac P,
+  Rault T, Louf R, Funtowicz M, Davison J, Shleifer S, von Platen P, Ma
+  C, Jernite Y, Plu J, Xu C, Le Scao T, Gugger S, Drame M, Lhoest Q,
+  Rush AM (2020). "HuggingFace's Transformers: State-of-the-art Natural
+  Language Processing." 1910.03771, <https://arxiv.org/abs/1910.03771>.
 
-  @Manual{,
-    title = {{pangoling}: {Access} to large language model predictions in {R}},
-    author = {Bruno Nicenboim},
-    year = {2023},
-    note = {R package version 1.0.1},
-    doi = {10.5281/zenodo.7637526},
-    url = {https://github.com/ropensci/pangoling},
-  }
+To see these entries in BibTeX format, use 'print(<citation>,
+bibtex=TRUE)', 'toBibtex(.)', or set
+'options(citation.bibtex.max=999)'.
 ```
 
 ## How to contribute

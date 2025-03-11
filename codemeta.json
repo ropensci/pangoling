@@ -2,13 +2,13 @@
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "pangoling",
-  "description": "Access to word predictability using large language (transformer) models.",
+  "description": "Provides access to word predictability estimates using large language models (LLMs) based on 'transformer' architectures via integration with the 'Hugging Face' ecosystem. The package interfaces with pre-trained neural networks and supports both causal/auto-regressive LLMs (e.g., 'GPT-2'; Radford et al., 2019) and masked/bidirectional LLMs (e.g., 'BERT'; Devlin et al., 2019, <doi:10.48550/arXiv.1810.04805>) to compute the probability of words, phrases, or tokens given their linguistic context. By enabling a straightforward estimation of word predictability, the package facilitates research in psycholinguistics, computational linguistics, and natural language processing (NLP).",
   "name": "pangoling: Access to Large Language Model Predictions",
-  "relatedLink": "https://docs.ropensci.org/pangoling",
+  "relatedLink": "https://docs.ropensci.org/pangoling/",
   "codeRepository": "https://github.com/ropensci/pangoling",
   "issueTracker": "https://github.com/ropensci/pangoling/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -20,7 +20,7 @@
       "@type": "Person",
       "givenName": "Bruno",
       "familyName": "Nicenboim",
-      "email": "bruno.nicenboim@gmail.com",
+      "email": "b.nicenboim@tilburguniversity.edu",
       "@id": "https://orcid.org/0000-0002-5176-3943"
     }
   ],
@@ -41,11 +41,40 @@
       "@type": "Person",
       "givenName": "Bruno",
       "familyName": "Nicenboim",
-      "email": "bruno.nicenboim@gmail.com",
+      "email": "b.nicenboim@tilburguniversity.edu",
       "@id": "https://orcid.org/0000-0002-5176-3943"
     }
   ],
   "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "brms",
+      "name": "brms",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=brms"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "knitr",
+      "name": "knitr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=knitr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "parallel",
+      "name": "parallel"
+    },
     {
       "@type": "SoftwareApplication",
       "identifier": "rmarkdown",
@@ -60,15 +89,15 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "knitr",
-      "name": "knitr",
+      "identifier": "spelling",
+      "name": "spelling",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=knitr"
+      "sameAs": "https://CRAN.R-project.org/package=spelling"
     },
     {
       "@type": "SoftwareApplication",
@@ -106,46 +135,28 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=covr"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "spelling",
-      "name": "spelling",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=spelling"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "rstudioapi",
-      "name": "rstudioapi",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=rstudioapi"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "brms",
-      "name": "brms",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=brms"
     }
   ],
   "softwareRequirements": {
     "1": {
+      "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 4.1.0"
+    },
+    "2": {
+      "@type": "SoftwareApplication",
+      "identifier": "cachem",
+      "name": "cachem",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=cachem"
+    },
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "data.table",
       "name": "data.table",
@@ -157,7 +168,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=data.table"
     },
-    "2": {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "memoise",
       "name": "memoise",
@@ -169,7 +180,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=memoise"
     },
-    "3": {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "reticulate",
       "name": "reticulate",
@@ -181,7 +192,24 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=reticulate"
     },
-    "4": {
+    "6": {
+      "@type": "SoftwareApplication",
+      "identifier": "rstudioapi",
+      "name": "rstudioapi",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rstudioapi"
+    },
+    "7": {
+      "@type": "SoftwareApplication",
+      "identifier": "stats",
+      "name": "stats"
+    },
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "tidyselect",
       "name": "tidyselect",
@@ -193,7 +221,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyselect"
     },
-    "5": {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "tidytable",
       "name": "tidytable",
@@ -206,36 +234,18 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tidytable"
     },
-    "6": {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "utils",
       "name": "utils"
     },
-    "7": {
-      "@type": "SoftwareApplication",
-      "identifier": "cachem",
-      "name": "cachem",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=cachem"
-    },
-    "8": {
-      "@type": "SoftwareApplication",
-      "identifier": "R",
-      "name": "R",
-      "version": ">= 4.1.0"
-    },
     "SystemRequirements": null
   },
-  "fileSize": "292.05KB",
+  "fileSize": "632.284KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
-      "datePublished": "2023",
+      "datePublished": "2025",
       "author": [
         {
           "@type": "Person",
@@ -246,9 +256,127 @@
       "name": "{pangoling}: {Access} to large language model predictions in {R}",
       "identifier": "10.5281/zenodo.7637526",
       "url": "https://github.com/ropensci/pangoling",
-      "description": "R package version 1.0.0",
+      "description": "R package version 1.0.1",
       "@id": "https://doi.org/10.5281/zenodo.7637526",
       "sameAs": "https://doi.org/10.5281/zenodo.7637526"
+    },
+    {
+      "@type": "CreativeWork",
+      "datePublished": "2020",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": "Thomas",
+          "familyName": "Wolf"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Lysandre",
+          "familyName": "Debut"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Victor",
+          "familyName": "Sanh"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Julien",
+          "familyName": "Chaumond"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Clement",
+          "familyName": "Delangue"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Anthony",
+          "familyName": "Moi"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Pierric",
+          "familyName": "Cistac"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Tim",
+          "familyName": "Rault"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Rémi",
+          "familyName": "Louf"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Morgan",
+          "familyName": "Funtowicz"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Joe",
+          "familyName": "Davison"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Sam",
+          "familyName": "Shleifer"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Patrick",
+          "familyName": "von Platen"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Clara",
+          "familyName": "Ma"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Yacine",
+          "familyName": "Jernite"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Julien",
+          "familyName": "Plu"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Canwen",
+          "familyName": "Xu"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Teven",
+          "familyName": "Le Scao"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Sylvain",
+          "familyName": "Gugger"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Mariama",
+          "familyName": "Drame"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Quentin",
+          "familyName": "Lhoest"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["Alexander", "M."],
+          "familyName": "Rush"
+        }
+      ],
+      "name": "{HuggingFace's Transformers}: State-of-the-art Natural Language Processing",
+      "url": "https://arxiv.org/abs/1910.03771"
     }
   ],
   "releaseNotes": "https://github.com/ropensci/pangoling/blob/master/NEWS.md",

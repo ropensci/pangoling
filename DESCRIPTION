@@ -3,15 +3,25 @@ Package: pangoling
 Title: Access to Large Language Model Predictions
 Version: 1.0.1
 Authors@R: c(
-    person("Bruno", "Nicenboim", , "bruno.nicenboim@gmail.com", role = c("aut", "cre"),
+    person("Bruno", "Nicenboim", , "b.nicenboim@tilburguniversity.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5176-3943")),
     person("Chris", "Emmerly", role = "ctb"),
     person("Giovanni", "Cassani", role = "ctb"),
     person("Lisa", "Levinson", role = "rev"),
     person("Utku", "Turk", role = "rev")
   )
-Description: Access to word predictability using large language
-    'transformer' models.
+Description: Provides access to word predictability estimates using large 
+             language models (LLMs) based on 'transformer' architectures via 
+             integration with the 'Hugging Face' ecosystem. The package 
+             interfaces with pre-trained neural networks and supports both 
+             causal/auto-regressive LLMs (e.g., 'GPT-2'; Radford et al., 2019) 
+             and masked/bidirectional LLMs (e.g., 'BERT'; Devlin et al., 2019, 
+             <doi:10.48550/arXiv.1810.04805>) to compute the 
+             probability of words, phrases, or tokens given their linguistic 
+             context. By enabling a straightforward estimation of word 
+             predictability, the package facilitates research in 
+             psycholinguistics, computational linguistics, and natural 
+             language processing (NLP).
 License: MIT + file LICENSE
 URL: https://docs.ropensci.org/pangoling/, https://github.com/ropensci/pangoling
 BugReports: https://github.com/ropensci/pangoling/issues

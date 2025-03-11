@@ -55,18 +55,18 @@ don't matter to us.)
 data("df_jaeger14")
 df_jaeger14
 #> # A tidytable: 8,624 × 14
-#>    subject  item cond  word       wordn    rt region question          accuracy
-#>    <chr>   <int> <chr> <chr>      <int> <int> <fct>  <chr>                <int>
-#>  1 1m1         1 a     那個           1   360 Det+CL 那個顧客聽說過老闆嗎?……        1
-#>  2 1m1         1 a     昨晚           2   359 Adv    那個顧客聽說過老闆嗎?……        1
-#>  3 1m1         1 a     揍了服務生     3   344 VN     那個顧客聽說過老闆嗎?……        1
-#>  4 1m1         1 a     一頓           4   313 FreqP  那個顧客聽說過老闆嗎?……        1
-#>  5 1m1         1 a     的             5   297 DE     那個顧客聽說過老闆嗎?……        1
-#>  6 1m1         1 a     顧客           6   312 head   那個顧客聽說過老闆嗎?……        1
-#>  7 1m1         1 a     聽說過         7   297 hd1    那個顧客聽說過老闆嗎?……        1
-#>  8 1m1         1 a     老闆           8   281 hd2    那個顧客聽說過老闆嗎?……        1
-#>  9 1m1         1 a     並且           9   297 hd3    那個顧客聽說過老闆嗎?……        1
-#> 10 1m1         1 a     記得          10   313 hd4    那個顧客聽說過老闆嗎?……        1
+#>    subject  item cond  word       wordn    rt region question   accuracy
+#>    <chr>   <int> <chr> <chr>      <int> <int> <fct>  <chr>         <int>
+#>  1 1m1         1 a     那個           1   360 Det+CL 那個顧客聽說過老闆…        1
+#>  2 1m1         1 a     昨晚           2   359 Adv    那個顧客聽說過老闆…        1
+#>  3 1m1         1 a     揍了服務生     3   344 VN     那個顧客聽說過老闆…        1
+#>  4 1m1         1 a     一頓           4   313 FreqP  那個顧客聽說過老闆…        1
+#>  5 1m1         1 a     的             5   297 DE     那個顧客聽說過老闆…        1
+#>  6 1m1         1 a     顧客           6   312 head   那個顧客聽說過老闆…        1
+#>  7 1m1         1 a     聽說過         7   297 hd1    那個顧客聽說過老闆…        1
+#>  8 1m1         1 a     老闆           8   281 hd2    那個顧客聽說過老闆…        1
+#>  9 1m1         1 a     並且           9   297 hd3    那個顧客聽說過老闆…        1
+#> 10 1m1         1 a     記得          10   313 hd4    那個顧客聽說過老闆…        1
 #> # ℹ 8,614 more rows
 #> # ℹ 5 more variables: correct_answer <int>, question_type <int>,
 #> #   experiment <chr>, list <int>, sentence <chr>
@@ -281,7 +281,7 @@ df_stim <- df_stim |>
 #> `縣長候選人質疑了那位昨天作家採訪了兩個小時的記者而且揚言報復。`
 #> ***
 toc()
-#> 102.154 sec elapsed
+#> 108.104 sec elapsed
 ```
 
 Inspect the calculated surprisal values:
@@ -359,7 +359,7 @@ We visualize the posterior distributions and model diagnostics:
 plot(fit_surp)
 ```
 
-![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-2.png)
+![plot of chunk fit-surp](vigfig-fit-surp-1.png)![plot of chunk fit-surp](vigfig-fit-surp-2.png)
 
 
 The effect of surprisal (in bits) on log-RT is summarized below:
@@ -368,7 +368,7 @@ The effect of surprisal (in bits) on log-RT is summarized below:
 ``` r
 posterior_summary(fit_surp, variable = "b_surprisal")
 #>                Estimate   Est.Error        Q2.5       Q97.5
-#> b_surprisal 0.007094449 0.001155484 0.004775279 0.009387659
+#> b_surprisal 0.007122151 0.001147024 0.004838423 0.009333683
 ```
 
 The conditional effects of surprisal on the original millisecond scale can be 
@@ -379,7 +379,7 @@ plotted as well:
 conditional_effects(fit_surp)
 ```
 
-![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png)
+![plot of chunk cond-effects](vigfig-cond-effects-1.png)
 
 # Conclusion
 
