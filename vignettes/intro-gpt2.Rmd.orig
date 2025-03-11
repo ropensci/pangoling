@@ -1,6 +1,10 @@
 ---
 title: "Using a GPT2 transformer model to get word predictability"
 bibliography: '`r system.file("REFERENCES.bib", package="pangoling")`'
+vignette: >
+  %\VignetteIndexEntry{Using a GPT2 transformer model to get word predictability}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}

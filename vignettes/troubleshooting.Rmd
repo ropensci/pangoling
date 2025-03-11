@@ -3,7 +3,7 @@ title: "Troubleshooting the use of Python in R"
 output: rmarkdown::html_vignette
 bibliography: '`r system.file("REFERENCES.bib", package="pangoling")`'
 vignette: >
-  %\VignetteIndexEntry{troubleshooting}
+  %\VignetteIndexEntry{Troubleshooting the use of Python in R}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

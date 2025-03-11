@@ -23,3 +23,9 @@ if (installed_py_pangoling()) {
 }
 }
 }
+\seealso{
+Other helper functions: 
+\code{\link{install_py_pangoling}()},
+\code{\link{set_cache_folder}()}
+}
+\concept{helper functions}

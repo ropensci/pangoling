@@ -1,6 +1,10 @@
 ---
 title: "Using a GPT2 transformer model to get word predictability"
-bibliography: '/home/bruno/R/x86_64-pc-linux-gnu-library/4.4/pangoling/REFERENCES.bib'
+bibliography: '/home/bruno/dev/pangoling/inst/REFERENCES.bib'
+vignette: >
+  %\VignetteIndexEntry{Using a GPT2 transformer model to get word predictability}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 
@@ -64,7 +68,7 @@ tic()
 #> 10 Ġtop    -5.36 
 #> # ℹ 50,247 more rows
 toc()
-#> 2.152 sec elapsed
+#> 5.438 sec elapsed
 ```
 
 (The pretrained models and tokenizers will be downloaded from 
@@ -97,7 +101,7 @@ tic()
 #> 10 Ġtop    -5.36 
 #> # ℹ 50,247 more rows
 toc()
-#> 0.475 sec elapsed
+#> 0.773 sec elapsed
 ```
 
 Notice that the tokens--that is, the way GPT-2 interprets words-- that are 
@@ -174,7 +178,7 @@ causal_next_tokens_pred_tbl("The apple doesn't fall far from the",
 #> 10 ĠRh           -10.7
 #> # ℹ 50,247 more rows
 toc()
-#> 0.172 sec elapsed
+#> 0.095 sec elapsed
 ```
 
 

@@ -36,6 +36,7 @@ set_cache_folder("~/new_cache_dir")
 \href{https://huggingface.co/docs/transformers/installation?highlight=transformers_cache#cache-setup}{Installation docs}
 
 Other helper functions: 
-\code{\link{install_py_pangoling}()}
+\code{\link{install_py_pangoling}()},
+\code{\link{installed_py_pangoling}()}
 }
 \concept{helper functions}

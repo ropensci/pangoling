@@ -20,14 +20,14 @@ navbar:
     left:  [intro, reference, articles, tutorials, news]
     right: [search, github]
 
-articles:
+vignettes:
 - title: Articles
   navbar: ~
   contents:
-  - '`articles/intro-gpt2`'
-  - '`articles/intro-bert`'
-  - '`articles/example`'
-  - '`articles/troubleshooting`'
+  - '`intro-gpt2`'
+  - '`intro-bert`'
+  - '`example`'
+  - '`troubleshooting`'
 
 reference:
 - title: About

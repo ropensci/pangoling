@@ -70,6 +70,7 @@ the same name are removed.
 }
 \seealso{
 Other helper functions: 
+\code{\link{installed_py_pangoling}()},
 \code{\link{set_cache_folder}()}
 }
 \concept{helper functions}

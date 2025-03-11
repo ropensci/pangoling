@@ -135,6 +135,7 @@ install_py_pangoling <- function(method = c("auto", "virtualenv", "conda"),
 #'  warning("Python dependencies are missing. Please install `torch` and `transformers`.")
 #' }
 #' }
+#' @family helper functions
 #' @export
 installed_py_pangoling <- function(){
   have_transformers <- reticulate::py_module_available("transformers")
