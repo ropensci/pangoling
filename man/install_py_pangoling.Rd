@@ -62,14 +62,15 @@ version control. If a new environment is created, existing environments with
 the same name are removed.
 }
 \examples{
-\dontrun{
+
 # Install with default settings:
-install_py_pangoling()
-}
+# install_py_pangoling()
+
 
 }
 \seealso{
 Other helper functions: 
+\code{\link{installed_py_pangoling}()},
 \code{\link{set_cache_folder}()}
 }
 \concept{helper functions}

@@ -20,3 +20,5 @@ README_cache
 ^.covrignore$
 REVIEW.md
 ^dev$
+^doc$
+^Meta$

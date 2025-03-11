@@ -121,6 +121,7 @@ In case of errors when a new model is run, check the status of
 }
 
 \examples{
+\dontshow{if (installed_py_pangoling()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data("df_sent")
 df_sent
 list_of_mats <- causal_pred_mats(
@@ -137,6 +138,7 @@ list_of_mats[[1]] |> tail()
 
 # Inspect the last rows of the second matrix
 list_of_mats[[2]] |> tail()
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other causal model functions: 

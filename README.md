@@ -137,8 +137,8 @@ package transformers. To cite pangoling in publications use:
 
   Nicenboim B (2023). _pangoling: Access to large language model
   predictions in R_. doi:10.5281/zenodo.7637526
-  <https://doi.org/10.5281/zenodo.7637526>, R package version
-  0.0.1.0000, <https://github.com/ropensci/pangoling>.
+  <https://doi.org/10.5281/zenodo.7637526>, R package version 1.0.1,
+  <https://github.com/ropensci/pangoling>.
 
 A BibTeX entry for LaTeX users is
 
@@ -146,7 +146,7 @@ A BibTeX entry for LaTeX users is
     title = {{pangoling}: {Access} to large language model predictions in {R}},
     author = {Bruno Nicenboim},
     year = {2023},
-    note = {R package version 0.0.1.0000},
+    note = {R package version 1.0.1},
     doi = {10.5281/zenodo.7637526},
     url = {https://github.com/ropensci/pangoling},
   }

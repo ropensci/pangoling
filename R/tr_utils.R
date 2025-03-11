@@ -6,7 +6,7 @@
 #' @inheritParams causal_next_tokens_pred_tbl
 #'
 #' @return A vector with the vocabulary of a model.
-#' @examples
+#' @examplesIf installed_py_pangoling()
 #' transformer_vocab(model = "gpt2") |>
 #'  head()
 #' @export
@@ -98,7 +98,7 @@ tokenize_ids_lst <- function(x, decode = decode, tkzr = tkzr){
 #' @return The number of tokens in a string or vector of words.
 #'
 #'
-#' @examples
+#' @examplesIf installed_py_pangoling()
 #' ntokens(x = c("The apple doesn't fall far from the tree."), model = "gpt2")
 #' @family token-related functions
 #' @export
@@ -465,7 +465,7 @@ word_lp <- function(words,
 #'        information to the user.
 #' @export
 #'
-#' @examples
+#' @examplesIf installed_py_pangoling()
 #' \dontrun{
 #' set_cache_folder("~/new_cache_dir")
 #' }

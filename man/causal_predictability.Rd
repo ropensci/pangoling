@@ -161,6 +161,7 @@ In case of errors when a new model is run, check the status of
 }
 
 \examples{
+\dontshow{if (installed_py_pangoling()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Using causal_targets_pred
 causal_targets_pred(
   targets = c("tree.", "cover."),
@@ -188,7 +189,7 @@ preds
 suppressPackageStartupMessages(library(tidytable))
 map2_dfr(preds, seq_along(preds), 
 ~ data.frame(tokens = names(.x), pred = .x, id = .y))
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other causal model functions: 

@@ -48,10 +48,10 @@
 #' The function returns `NULL` invisibly, but outputs a message on successful 
 #' installation.
 #' @examples
-#' \dontrun{
+#' 
 #' # Install with default settings:
-#' install_py_pangoling()
-#' }
+#' # install_py_pangoling()
+#' 
 #' 
 #' @export
 install_py_pangoling <- function(method = c("auto", "virtualenv", "conda"), 
@@ -120,6 +120,28 @@ install_py_pangoling <- function(method = c("auto", "virtualenv", "conda"),
 
 } # nocov end
 
+#' Check if the required Python dependencies for `pangoling` are installed
+#'
+#' This function verifies whether the necessary Python modules (`transformers` 
+#' and `torch`) are available in the current Python environment.
+#'
+#' @return A logical value: `TRUE` if both `transformers` and `torch` are 
+#'         installed and accessible, otherwise `FALSE`.
+#' @examples
+#' \dontrun{
+#' if (installed_py_pangoling()) {
+#'  message("Python dependencies are installed.")
+#' } else {
+#'  warning("Python dependencies are missing. Please install `torch` and `transformers`.")
+#' }
+#' }
+#' @family helper functions
+#' @export
+installed_py_pangoling <- function(){
+  have_transformers <- reticulate::py_module_available("transformers")
+  have_torch <- reticulate::py_module_available("torch")
+  have_transformers && have_torch
+}
 
 #' @noRd
 message_verbose <- function(...) {

@@ -44,9 +44,15 @@ torch <- NULL
 } # nocov end
 
 .onAttach <- function(libname, pkgname) {
+  inst_msg <- ""
+  if(installed_py_pangoling() == FALSE) {
+    inst_msg <- paste0("The package needs some python dependencies, ", 
+                       "to install them use `install_py_pangoling()`\n")
+  }
   packageStartupMessage(pkgname,
                         " version ",
                         utils::packageVersion(pkgname),
+                        inst_msg,
                         "\nAn introduction to the package can be found in ",
                         "https://docs.ropensci.org/pangoling/articles/\n",
                         "Notice that pretrained models and tokenizers are ",

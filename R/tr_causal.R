@@ -41,7 +41,7 @@
 #'
 #' @return Nothing.
 #'
-#' @examples
+#' @examplesIf installed_py_pangoling()
 #' causal_preload(model = "gpt2")
 #'
 #' @family causal model helper functions
@@ -68,7 +68,7 @@ causal_preload <- function(model = getOption("pangoling.causal.default"),
 #' @inherit  causal_preload details
 #' @inheritSection causal_preload More details about causal models
 #' @return A list with the configuration of the model.
-#' @examples
+#' @examplesIf installed_py_pangoling()
 #' causal_config(model = "gpt2")
 #'
 #' @family causal model helper functions
@@ -115,7 +115,7 @@ causal_config <- function(model = getOption("pangoling.causal.default"),
 #' @inherit causal_preload details
 #' @inheritSection causal_preload More details about causal models
 #' @return A table with possible next tokens and their log-probabilities.
-#' @examples
+#' @examplesIf installed_py_pangoling()
 #' causal_next_tokens_pred_tbl(
 #'   context = "The apple doesn't fall far from the",
 #'   model = "gpt2"
@@ -237,7 +237,7 @@ causal_next_tokens_pred_tbl <-
 #'   `causal_tokens_pred_lst()`, a list of named numeric vectors, one for 
 #'   each sentence or group.
 #'
-#' @examples
+#' @examplesIf installed_py_pangoling()
 #' # Using causal_targets_pred
 #' causal_targets_pred(
 #'   targets = c("tree.", "cover."),
@@ -535,7 +535,7 @@ causal_mat <- function(tensor,
 #' @return A list of matrices with tokens in their columns and the vocabulary of
 #'         the model in their rows
 #'
-#' @examples
+#' @examplesIf installed_py_pangoling()
 #' data("df_sent")
 #' df_sent
 #' list_of_mats <- causal_pred_mats(
