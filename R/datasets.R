@@ -88,18 +88,17 @@
 "df_jaeger14"
 
 
-#' Example dataset: Two word-by-word tokenized sentences
+#' Example dataset: Two word-by-word sentences
 #'
-#' This dataset contains tokenized words from two example sentences, split 
+#' This dataset contains two example sentences, split 
 #' word-by-word. It is structured to demonstrate the use of the `pangoling` 
-#' package for processing text data.
 #' package for processing text data.
 #'
 #' @format A data frame with 15 rows and 2 columns:
 #' \describe{
 #'   \item{sent_n}{(integer) Sentence number, indicating which sentence each 
 #'                 word belongs to.}
-#'   \item{word}{(character) Tokenized words from the sentences.}
+#'   \item{word}{(character) Words from the sentences.}
 #' }
 #' @family datasets
 #' @examples

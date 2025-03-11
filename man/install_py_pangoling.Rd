@@ -64,8 +64,9 @@ the same name are removed.
 \examples{
 
 # Install with default settings:
-# install_py_pangoling()
-
+if (FALSE) {
+ install_py_pangoling()
+}
 
 }
 \seealso{

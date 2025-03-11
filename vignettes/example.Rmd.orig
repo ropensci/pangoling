@@ -149,7 +149,7 @@ fit_surp <-
 
 We visualize the posterior distributions and model diagnostics:
 
-```{r}
+```{r fit-surp}
 plot(fit_surp)
 ```
 
@@ -163,7 +163,7 @@ posterior_summary(fit_surp, variable = "b_surprisal")
 The conditional effects of surprisal on the original millisecond scale can be 
 plotted as well: 
 
-```{r}
+```{r cond-effects}
 conditional_effects(fit_surp)
 ```
 
