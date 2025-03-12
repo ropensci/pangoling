@@ -6,6 +6,8 @@ torch <- NULL
 
 #' @noRd
 .onLoad <- function(libname, pkgname) { # nocov start
+  # CRAN OMP THREAD LIMIT
+  Sys.setenv("OMP_THREAD_LIMIT" = 1)
   if (is_mac()) {
     # Workaround for R's built-in OpenMP conflicts
     Sys.setenv(KMP_DUPLICATE_LIB_OK = 'TRUE')
