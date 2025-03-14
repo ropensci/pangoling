@@ -1,3 +1,7 @@
+# pangoling 1.0.2
+
+- Internal changes: OMP THREAD LIMIT was set to 1.
+
 # pangoling 1.0.1
 
 ### New Features

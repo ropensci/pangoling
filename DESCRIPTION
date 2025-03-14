@@ -1,7 +1,7 @@
 Type: Package
 Package: pangoling
 Title: Access to Large Language Model Predictions
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: c(
     person("Bruno", "Nicenboim", , "b.nicenboim@tilburguniversity.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5176-3943")),
