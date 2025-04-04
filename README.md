@@ -137,7 +137,7 @@ package `transformers` (and the specific LLM they are using):
 
   Nicenboim B (2025). _pangoling: Access to large language model
   predictions in R_. doi:10.5281/zenodo.7637526
-  <https://doi.org/10.5281/zenodo.7637526>, R package version 1.0.1,
+  <https://doi.org/10.5281/zenodo.7637526>, R package version 1.0.2,
   <https://github.com/ropensci/pangoling>.
 
   Wolf T, Debut L, Sanh V, Chaumond J, Delangue C, Moi A, Cistac P,
