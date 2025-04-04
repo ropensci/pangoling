@@ -23,7 +23,7 @@ I have added the link <https://huggingface.co/> to the description
 > You have examples wrapped in if(FALSE). Please never do that. Ideally find toy examples that can be regularly executed and checked. Lengthy examples (> 5 sec), can be wrapped in \donttest{}. \dontrun{} can be used if the example really cannot be executed (e.g. because of missing additional software, missing API keys, ...) by the user.
 
 **Answer**:
-There was one example that trigger the installation of python packages warapped in `if(FALSE)`. This has been changed to `\dontrun{}`. But notice that very few examples can be actually run, since most functions depend on additional software (python packages). 
+There was one example that trigger the installation of python packages wrapped in `if(FALSE)`. This has been changed to `\dontrun{}`. But notice that very few examples can be actually run, since most functions depend on additional software (python packages). 
 
 
 > You write information messages to the console that cannot be easily suppressed.
@@ -36,7 +36,7 @@ I changed the `cat()` call to `message()` through the wrapper function `message_
 > Please do not modify the global environment (e.g. by using <<-) in your functions. This is not allowed by the CRAN policies. -> R/zzz.R
 
 **Answer**:
-`.Onload` function in  had:
+`.Onload` function  had:
 `inspect <<- reticulate::import("inspect", delay_load = TRUE, convert = TRUE)`
 but no corresponding `inspect <- NULL` call in the parent scope, which caused `<<-` to continue searching parent environments until it reaches the `globalenv.`
 I removed it. (I also removed `transformers <<-` because it wasn't necessary.)
@@ -44,10 +44,6 @@ I removed it. (I also removed `transformers <<-` because it wasn't necessary.)
 Notice that `.Onload` function in zzz.R still has 
 `torch <<- reticulate::import("torch", delay_load = TRUE, convert = FALSE)`
 but there is a corresponding `torch <- NULL` call in the parent scope.
-
-
-
-
 
 ## R CMD check results
 
