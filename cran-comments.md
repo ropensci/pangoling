@@ -1,6 +1,6 @@
 ## Resubmission
 
-This is a resubmission. 
+This is a resubmission. I addressed the following comments:
 
 > Please write references in the description of the DESCRIPTION file in the form
 > authors (year) <doi:...>
@@ -23,7 +23,7 @@ I have added the link <https://huggingface.co/> to the description
 > You have examples wrapped in if(FALSE). Please never do that. Ideally find toy examples that can be regularly executed and checked. Lengthy examples (> 5 sec), can be wrapped in \donttest{}. \dontrun{} can be used if the example really cannot be executed (e.g. because of missing additional software, missing API keys, ...) by the user.
 
 **Answer**:
-There was one example that trigger the installation of python packages wrapped in `if(FALSE)`. This has been changed to `\dontrun{}`. But notice that very few examples can be actually run, since most functions depend on additional software (python packages). 
+There was one example that triggered the installation of python packages wrapped in an `if(FALSE)`. This has been changed to `\dontrun{}`. But notice that very few examples can be actually run in CRAN, since almost all functions depend on additional software (python packages). 
 
 
 > You write information messages to the console that cannot be easily suppressed.
