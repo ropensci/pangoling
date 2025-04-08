@@ -1,5 +1,4 @@
 test_that("`.onLoad` initializes correctly", {
-  expect_true(!is.null(pangoling:::transformers))
   expect_true(!is.null(pangoling:::torch))
   
   # Test options are set correctly

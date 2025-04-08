@@ -50,7 +50,7 @@
 #' @examples
 #' 
 #' # Install with default settings:
-#' if (FALSE) {
+#' \dontrun{
 #'  install_py_pangoling()
 #' }
 #' 
@@ -110,7 +110,7 @@ install_py_pangoling <- function(method = c("auto", "virtualenv", "conda"),
   )
   
   do.call(reticulate::py_install, py_install_args)
-  cat("\nInstallation complete.\n\n")
+  message_verbose("\nInstallation complete.\n\n")
   
   if (restart_session &&
       requireNamespace("rstudioapi", quietly = TRUE) &&

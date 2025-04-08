@@ -1,3 +1,14 @@
+# pangoling 
+
+# pangoling 1.0.3
+
+- Internal changes to comply with CRAN requirements.
+- HF_HOME is used now to store the models rather than TRANSFORMERS_CACHE
+
+# pangoling 1.0.2
+
+- Internal changes: OMP THREAD LIMIT was set to 1.
+
 # pangoling 1.0.1
 
 ### New Features

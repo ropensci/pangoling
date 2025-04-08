@@ -64,7 +64,7 @@ the same name are removed.
 \examples{
 
 # Install with default settings:
-if (FALSE) {
+\dontrun{
  install_py_pangoling()
 }
 

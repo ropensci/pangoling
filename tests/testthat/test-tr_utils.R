@@ -57,7 +57,6 @@ test_that("set_cache_folder sets and retrieves the cache folder correctly", {
   expect_silent(set_cache_folder(temp_dir))
   
   # Check if environment variables were set correctly
-  transformers_cache <- Sys.getenv("TRANSFORMERS_CACHE")
   hf_home <- Sys.getenv("HF_HOME")
   
   expect_equal(transformers_cache, temp_dir)

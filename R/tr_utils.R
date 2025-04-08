@@ -450,7 +450,7 @@ word_lp <- function(words,
 #'
 #' This function sets the cache directory for HuggingFace transformers. If a 
 #' path is given, the function checks if the directory exists and then sets the 
-#' `TRANSFORMERS_CACHE` environment variable to this path.
+#' `HF_HOME` environment variable to this path.
 #' If no path is provided, the function checks for the existing cache directory 
 #' in a number of environment variables.
 #' If none of these environment variables are set, it provides the user with 
@@ -461,7 +461,7 @@ word_lp <- function(words,
 #'             number of environment variables. Default is NULL.
 #'
 #' @return Nothing is returned, this function is called for its side effect of 
-#'        setting the `TRANSFORMERS_CACHE` environment variable, or providing 
+#'        setting the `HF_HOME` environment variable, or providing 
 #'        information to the user.
 #' @export
 #'
@@ -476,10 +476,10 @@ set_cache_folder <- function(path = NULL){
   if(!is.null(path)){
     if(!dir.exists(path)) stop2("Folder '", path, "' doesn't exist.")
     reticulate::py_run_string(
-                  paste0("import os\nos.environ['TRANSFORMERS_CACHE']='",
+                  paste0("import os\nos.environ['HF_HOME']='",
                          path,"'"))
-    reticulate::py_run_string(
-                  paste0("import os\nos.environ['HF_HOME']='",path,"'"))
+    # reticulate::py_run_string(
+    #               paste0("import os\nos.environ['HF_HOME']='",path,"'"))
   }
   path <- c(Sys.getenv("TRANSFORMERS_CACHE"),
             Sys.getenv("HUGGINGFACE_HUB_CACHE"),
@@ -495,7 +495,7 @@ set_cache_folder <- function(path = NULL){
       "By default pretrained models are downloaded and locally",
       " cached at: ~/.cache/huggingface/hub. ",
       "This is the default directory given by the shell ",
-      "environment variable TRANSFORMERS_CACHE. On Windows, ",
+      "environment variable HF_HOME. On Windows, ",
       "the default directory is given by ",
       "C:\\Users\\username\\.cache\\huggingface\\hub.\n",
       "For changing the shell environment variables that ",

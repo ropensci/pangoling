@@ -20,6 +20,9 @@ knitr::opts_chunk$set(
 [![Project Status: active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![DOI](https://zenodo.org/badge/497831295.svg)](https://zenodo.org/badge/latestdoi/497831295)
 [![Status at rOpenSci Software Peer Review](https://badges.ropensci.org/575_status.svg)](https://github.com/ropensci/software-review/issues/575)
+[![CRAN status](https://www.r-pkg.org/badges/version/pangoling)](https://CRAN.R-project.org/package=pangoling)
+[![metacran downloads](https://cranlogs.r-pkg.org/badges/grand-total/pangoling)](https://cran.r-project.org/package=pangoling)
+
 <!-- badges: end -->
 
 
@@ -40,7 +43,13 @@ The training data of the most popular models (such as GPT-2) haven't been releas
 
 ## Installation
 
-There is still no CRAN version of `pangoling`. To install the latest version from github use:
+To install the latest CRAN version of `pangoling` use:
+
+```{r, eval = FALSE}
+install.packages("pangoling")
+```
+
+To install the latest version from github use:
 
 ```{r, eval = FALSE}
 install.packages("pangoling", repos = "https://ropensci.r-universe.dev")

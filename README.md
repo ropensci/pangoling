@@ -13,6 +13,11 @@ active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repost
 [![DOI](https://zenodo.org/badge/497831295.svg)](https://zenodo.org/badge/latestdoi/497831295)
 [![Status at rOpenSci Software Peer
 Review](https://badges.ropensci.org/575_status.svg)](https://github.com/ropensci/software-review/issues/575)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/pangoling)](https://CRAN.R-project.org/package=pangoling)
+[![metacran
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/pangoling)](https://cran.r-project.org/package=pangoling)
+
 <!-- badges: end -->
 
 `pangoling`[^1] is an R package for estimating the predictability of
@@ -40,8 +45,13 @@ website](https://huggingface.co/gpt2).
 
 ## Installation
 
-There is still no CRAN version of `pangoling`. To install the latest
-version from github use:
+To install the latest CRAN version of `pangoling` use:
+
+``` r
+install.packages("pangoling")
+```
+
+To install the latest version from github use:
 
 ``` r
 install.packages("pangoling", repos = "https://ropensci.r-universe.dev")
@@ -107,6 +117,7 @@ df_sent <- df_sent |>
 #> `The apple doesn't fall far from the tree.`
 #> Text id: 2
 #> `Don't judge a book by its cover.`
+#> ***
 df_sent
 #> # A tidytable: 15 × 3
 #>    sent_n word         lp
@@ -135,9 +146,9 @@ citation("pangoling")
 Users are encouraged to not only cite pangoling, but also the python
 package `transformers` (and the specific LLM they are using):
 
-  Nicenboim B (2025). _pangoling: Access to large language model
-  predictions in R_. doi:10.5281/zenodo.7637526
-  <https://doi.org/10.5281/zenodo.7637526>, R package version 1.0.1,
+  Nicenboim B (2025-04-07 17:00:02 UTC). _pangoling: Access to large
+  language model predictions in R_. doi:10.5281/zenodo.7637526
+  <https://doi.org/10.5281/zenodo.7637526>, R package version 1.0.3,
   <https://github.com/ropensci/pangoling>.
 
   Wolf T, Debut L, Sanh V, Chaumond J, Delangue C, Moi A, Cistac P,

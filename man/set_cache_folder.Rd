@@ -13,13 +13,13 @@ number of environment variables. Default is NULL.}
 }
 \value{
 Nothing is returned, this function is called for its side effect of
-setting the \code{TRANSFORMERS_CACHE} environment variable, or providing
+setting the \code{HF_HOME} environment variable, or providing
 information to the user.
 }
 \description{
 This function sets the cache directory for HuggingFace transformers. If a
 path is given, the function checks if the directory exists and then sets the
-\code{TRANSFORMERS_CACHE} environment variable to this path.
+\code{HF_HOME} environment variable to this path.
 If no path is provided, the function checks for the existing cache directory
 in a number of environment variables.
 If none of these environment variables are set, it provides the user with
