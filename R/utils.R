@@ -144,6 +144,44 @@ installed_py_pangoling <- function(){
   have_transformers && have_torch
 }
 
+#' Get versions of Python and key dependencies used by 'pangoling'
+#'
+#' This helper function returns the currently active Python version along with 
+#' the versions of the 'torch' and 'transformers' Python packages, as used by 
+#' the 'pangoling' package.
+#'
+#' It uses `reticulate::py_version()` to retrieve the active Python version, 
+#' and `reticulate::py_list_packages()` to extract version information for 
+#' installed Python packages.
+#'
+#' This is useful for debugging, reproducibility, and verifying compatibility 
+#' with the required Python dependencies.
+#'
+#' @return A named list with elements:
+#' \describe{
+#'   \item{python}{The Python version string.}
+#'   \item{torch}{The version of the installed 'torch' Python package, or \code{NULL} if not found.}
+#'   \item{transformers}{The version of the installed 'transformers' Python package, or \code{NULL} if not found.}
+#' }
+#'
+#' @examples
+#' installed_py_pangoling_list()
+#'
+#' @seealso [reticulate::py_version()], [reticulate::py_list_packages()]
+#' @family helper functions
+#' @export
+installed_py_pangoling_list <- function(){
+  list(
+    "python" = reticulate::py_version(),
+    "torch" = reticulate::py_list_packages() |>
+      tidytable::filter(package == "torch") |>
+      tidytable::pull(version),
+    "transformers" = reticulate::py_list_packages() |>
+      tidytable::filter(package == "transformers") |>
+      tidytable::pull(version)
+  )
+}
+
 #' @noRd
 message_verbose <- function(...) {
   if (options()$pangoling.verbose > 0) message(...)

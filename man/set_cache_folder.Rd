@@ -37,6 +37,7 @@ set_cache_folder("~/new_cache_dir")
 
 Other helper functions: 
 \code{\link{install_py_pangoling}()},
-\code{\link{installed_py_pangoling}()}
+\code{\link{installed_py_pangoling}()},
+\code{\link{installed_py_pangoling_list}()}
 }
 \concept{helper functions}

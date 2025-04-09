@@ -64,3 +64,11 @@ test_that("set_cache_folder sets and retrieves the cache folder correctly", {
   # Clean up
   unlink(temp_dir, recursive = TRUE)
 })
+
+
+test_that("installed_py_pangoling_list returns expected structure", {
+  result <- installed_py_pangoling_list()
+  
+  expect_type(result, "list")
+  expect_named(result, c("python", "torch", "transformers"))
+ })

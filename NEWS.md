@@ -1,5 +1,8 @@
 # pangoling 
 
+- Added `installed_py_pangoling_list()` to inspect the currently active Python version and the versions of key Python dependencies (`torch`, `transformers`). Useful for reproducibility and debugging. See `?installed_py_pangoling_list`.
+
+
 # pangoling 1.0.3
 
 - Internal changes to comply with CRAN requirements.
