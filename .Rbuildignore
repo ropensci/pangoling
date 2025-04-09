@@ -28,3 +28,4 @@ REVIEW.md
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
 ^checklist\.md$
+^_pyversion\.md$

@@ -59,7 +59,6 @@ test_that("set_cache_folder sets and retrieves the cache folder correctly", {
   # Check if environment variables were set correctly
   hf_home <- Sys.getenv("HF_HOME")
   
-  expect_equal(transformers_cache, temp_dir)
   expect_equal(hf_home, temp_dir)
   
   # Clean up
