@@ -131,6 +131,15 @@ test_that("gpt2 get prob work", {
                causal_pred_mats(x = df_order2$word, by = df_order2$item) |>
                setNames(c("1","2")))
 
+  # df_split <- data.frame(
+  #   word = c("The", " ap", "ple", " doesn't", " fall", " far", " from", " the", " tree", "."),
+  #   sent_n = 1) 
+  # 
+  # sp_probs <- causal_words_pred(df_split$word, sep = "", by = df_split$sent_n)
+  # 
+  # causal_words_pred(x = df_split$word, sep = "", by = df_split$sent_n)
+  # 
+  
 })
 
 test_that("word_n works",{

@@ -119,11 +119,14 @@ causal transformer model:
 \item \strong{\code{causal_targets_pred()}}: Evaluates specific target words or phrases
 based on their given contexts. Use when you have explicit
 context-target pairs to evaluate, with each target word or phrase paired
-with a single preceding context.
+with a single preceding context. Notice that if the target is a "token"
+rather than a word, one needs to set \code{sep = ""}.
 \item \strong{\code{causal_words_pred()}}: Computes predictability for all elements of a
 vector grouped by a specified variable. Use when working with words or
 phrases split into groups, such as sentences or paragraphs, where
-predictability is computed for every word or phrase in each group.
+predictability is computed for every word or phrase in each group. Notice
+that if the elements of the vector \code{x} are  "tokens" rather than a words
+(or phrases), one needs to set \code{sep = ""}.
 \item \strong{\code{causal_tokens_pred_lst()}}: Computes the predictability of each token
 in a sentence (or group of sentences) and returns a list of results for
 each sentence. Use when you want to calculate the predictability of

@@ -1,7 +1,8 @@
 # pangoling 
 
 - Added `installed_py_pangoling_list()` to inspect the currently active Python version and the versions of key Python dependencies (`torch`, `transformers`). Useful for reproducibility and debugging. See `?installed_py_pangoling_list`.
-
+- Discuss in the documentation how to deal with tokens as input of
+causal functions. #51
 
 # pangoling 1.0.3
 
