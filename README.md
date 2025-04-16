@@ -143,24 +143,24 @@ df_sent
 
 ``` r
 citation("pangoling")
+```
+
 Users are encouraged to not only cite pangoling, but also the python
 package `transformers` (and the specific LLM they are using):
 
-  Nicenboim B (2025-04-07 17:00:02 UTC). _pangoling: Access to large
-  language model predictions in R_. doi:10.5281/zenodo.7637526
-  <https://doi.org/10.5281/zenodo.7637526>, R package version 1.0.3,
-  <https://github.com/ropensci/pangoling>.
+Nicenboim B (2025). *pangoling: Access to large language model
+predictions in R*. <doi:10.5281/zenodo.7637526>
+<https://doi.org/10.5281/zenodo.7637526>, R package version 1.0.3,
+<https://github.com/ropensci/pangoling>.
 
-  Wolf T, Debut L, Sanh V, Chaumond J, Delangue C, Moi A, Cistac P,
-  Rault T, Louf R, Funtowicz M, Davison J, Shleifer S, von Platen P, Ma
-  C, Jernite Y, Plu J, Xu C, Le Scao T, Gugger S, Drame M, Lhoest Q,
-  Rush AM (2020). "HuggingFace's Transformers: State-of-the-art Natural
-  Language Processing." 1910.03771, <https://arxiv.org/abs/1910.03771>.
+Wolf T, Debut L, Sanh V, Chaumond J, Delangue C, Moi A, Cistac P, Rault
+T, Louf R, Funtowicz M, Davison J, Shleifer S, von Platen P, Ma C,
+Jernite Y, Plu J, Xu C, Le Scao T, Gugger S, Drame M, Lhoest Q, Rush AM
+(2020). “HuggingFace’s Transformers: State-of-the-art Natural Language
+Processing.” 1910.03771, <https://arxiv.org/abs/1910.03771>.
 
-To see these entries in BibTeX format, use 'print(<citation>,
-bibtex=TRUE)', 'toBibtex(.)', or set
-'options(citation.bibtex.max=999)'.
-```
+To see these entries in BibTeX format, use ‘print(<citation>,
+bibtex=TRUE)’, ‘toBibtex(.)’, or set ‘options(citation.bibtex.max=999)’.
 
 ## How to contribute
 

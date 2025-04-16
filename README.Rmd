@@ -90,7 +90,7 @@ df_sent
 
 ## How to cite
 
-```{r, comment = NA }
+```{r, comment = NA, results= 'asis'}
 citation("pangoling")
 ```
 
