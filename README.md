@@ -10,7 +10,7 @@ stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecy
 [![R-CMD-check](https://github.com/ropensci/pangoling/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/pangoling/actions/workflows/R-CMD-check.yaml)
 [![Project Status:
 active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![DOI](https://zenodo.org/badge/497831295.svg)](https://zenodo.org/badge/latestdoi/497831295)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15008685.svg)](https://doi.org/10.5281/zenodo.15008685)
 [![Status at rOpenSci Software Peer
 Review](https://badges.ropensci.org/575_status.svg)](https://github.com/ropensci/software-review/issues/575)
 [![CRAN
