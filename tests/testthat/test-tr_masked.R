@@ -8,6 +8,12 @@ test_that("masked load and gets config", {
   conf_lst <- masked_config()
   expect_true(is.list(conf_lst))
   expect_equal(conf_lst$`_name_or_path`, getOption("pangoling.masked.default"))
+  expect_invisible(
+    masked_preload(model = "bert-base-uncased", output_hidden_states = FALSE)
+  )
+  expect_invisible(
+    masked_preload(model = "bert-base-uncased", output_hidden_states = TRUE)
+  )
 })
 
 

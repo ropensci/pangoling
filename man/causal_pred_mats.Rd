@@ -143,6 +143,7 @@ list_of_mats[[2]] |> tail()
 \seealso{
 Other causal model functions: 
 \code{\link{causal_next_tokens_pred_tbl}()},
+\code{\link{causal_targets_layers}()},
 \code{\link{causal_words_pred}()}
 }
 \concept{causal model functions}

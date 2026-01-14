@@ -51,6 +51,7 @@ masked_config(model = "bert-base-uncased")
 }
 \seealso{
 Other masked model helper functions: 
-\code{\link{masked_preload}()}
+\code{\link{masked_preload}()},
+\code{\link{masked_unload}()}
 }
 \concept{masked model helper functions}

@@ -7,6 +7,7 @@
 causal_preload(
   model = getOption("pangoling.causal.default"),
   checkpoint = NULL,
+  output_hidden_states = FALSE,
   add_special_tokens = NULL,
   config_model = NULL,
   config_tokenizer = NULL
@@ -18,6 +19,10 @@ models based on "gpt2". See
 \href{https://huggingface.co/models?other=gpt2}{hugging face website}.}
 
 \item{checkpoint}{Folder of a checkpoint.}
+
+\item{output_hidden_states}{Logical. If TRUE, the model will return hidden
+states from all layers, which can be extracted using the *_layers() functions.
+Default is FALSE. Note: Setting this to TRUE increases memory usage.}
 
 \item{add_special_tokens}{Whether to include special tokens. It has the
 same default as the
@@ -69,6 +74,7 @@ causal_preload(model = "gpt2")
 }
 \seealso{
 Other causal model helper functions: 
-\code{\link{causal_config}()}
+\code{\link{causal_config}()},
+\code{\link{causal_unload}()}
 }
 \concept{causal model helper functions}

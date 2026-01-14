@@ -17,6 +17,12 @@ test_that("gpt2 load and gets config", {
     conf_lst$`_name_or_path`,
     getOption("pangoling.causal.default")
   )
+  expect_invisible(
+    causal_preload(model = "gpt2", output_hidden_states = FALSE)
+  )
+  expect_invisible(
+    causal_preload(model = "gpt2", output_hidden_states = TRUE)
+  )
 })
 
 test_that("empty or small strings", {

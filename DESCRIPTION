@@ -1,7 +1,7 @@
 Type: Package
 Package: pangoling
 Title: Access to Large Language Model Predictions
-Version: 1.0.3
+Version: 1.1.0
 Authors@R: c(
     person("Bruno", "Nicenboim", , "b.nicenboim@tilburguniversity.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5176-3943")),
@@ -10,7 +10,7 @@ Authors@R: c(
     person("Lisa", "Levinson", role = "rev"),
     person("Utku", "Turk", role = "rev")
   )
-Description: Provides access to word predictability estimates using large 
+Description: Provides access to word predictability estimates and embedding layers using large 
              language models (LLMs) based on 'transformer' architectures via 
              integration with the 'Hugging Face' ecosystem 
              <https://huggingface.co/>. The package 
@@ -22,7 +22,8 @@ Description: Provides access to word predictability estimates using large
              <https://storage.prod.researchhub.com/uploads/papers/2020/06/01/language-models.pdf>, 
              for details on BERT and masked models, see 
              Devlin et al. (2019) <doi:10.48550/arXiv.1810.04805>. By enabling a
-             straightforward estimation of word predictability, the package 
+             straightforward estimation of word predictability and extraction of 
+             word vector representations, the package 
              facilitates research in psycholinguistics, computational 
              linguistics, and natural language processing (NLP).
 License: MIT + file LICENSE
@@ -42,6 +43,7 @@ Imports:
     utils
 Suggests: 
     brms,
+    philentropy,
     knitr,
     parallel,
     rmarkdown,
@@ -54,6 +56,6 @@ Encoding: UTF-8
 Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 StagedInstall: yes
 VignetteBuilder: knitr

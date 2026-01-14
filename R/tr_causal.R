@@ -30,6 +30,9 @@
 #' models based on "gpt2". See 
 #' [hugging face website](https://huggingface.co/models?other=gpt2).
 #' @param checkpoint Folder of a checkpoint.
+#' @param output_hidden_states Logical. If TRUE, the model will return hidden 
+#'   states from all layers, which can be extracted using the *_layers() functions.
+#'   Default is FALSE. Note: Setting this to TRUE increases memory usage.
 #' @param add_special_tokens Whether to include special tokens. It has the
 #'                           same default as the
 #' [AutoTokenizer](https://huggingface.co/docs/transformers/v4.25.1/en/model_doc/auto#transformers.AutoTokenizer)
@@ -49,17 +52,53 @@
 #'
 causal_preload <- function(model = getOption("pangoling.causal.default"),
                            checkpoint = NULL,
+                           output_hidden_states = FALSE,
                            add_special_tokens = NULL,
                            config_model = NULL, config_tokenizer = NULL) {
   message_verbose("Preloading causal model ", model, "...")
   lang_model(model, 
              checkpoint = checkpoint, 
              task = "causal", 
+             output_hidden_states = output_hidden_states,
              config_model = config_model)
   tokenizer(model, 
             add_special_tokens = add_special_tokens, 
             config_tokenizer = config_tokenizer)
   invisible()
+}
+
+#' Unload a causal language model and free memory
+#'
+#' Unloads a causal language model and its tokenizer from memory, and triggers
+#' garbage collection to free up RAM and GPU memory.
+#'
+#' @details
+#' This function helps manage memory when working with large models. It:
+#' - Deletes the model and tokenizer objects from Python
+#' - Empties the CUDA cache (if using GPU)
+#' - Triggers garbage collection in both Python and R
+#'
+#' It's particularly useful when:
+#' - Switching between different models
+#' - Working with limited memory
+#' - Running multiple models sequentially
+#'
+#' @return Nothing (called for side effects).
+#'
+#' @examplesIf installed_py_pangoling()
+#' # Load a model
+#' causal_preload(model = "gpt2")
+#' 
+#' # Do some work...
+#' pred <- causal_targets_pred(contexts = "The cat", targets = "sat", model = "gpt2")
+#' 
+#' # Unload when done
+#' causal_unload()
+#'
+#' @family causal model helper functions
+#' @export
+causal_unload <- function() {
+  transformer_unload()
 }
 
 #' Returns the configuration of a causal model
@@ -726,4 +765,478 @@ causal_targets_pred <- function(contexts,
     unsplit(by[keep], drop = TRUE)
   lps |>
     ln_p_change(log.p = log.p)
+}
+
+
+
+#' Extract hidden layer representations using a causal transformer model
+#'
+#' These functions extract hidden layer representations (embeddings) from 
+#' transformer models for words, phrases, or tokens.
+#'
+#' @details
+#' These functions extract hidden states from all layers of a transformer model,
+#' including layer 0 (non-contextualized token embeddings) and layers 1-N 
+#' (contextualized representations from each transformer block).
+#' 
+#' **Layer numbering:**
+#' - Layer 0: Non-contextualized token embeddings (input to the transformer)
+#' - Layers 1-N: Output from each transformer block (contextualized)
+#' 
+#' 
+#' - **`causal_targets_layers_lst()`**: Extract layers for specific target words or 
+#'   phrases based on their contexts. Returns hidden states for each target token.
+#' - **`causal_words_layers_lst()`**: Extract layers for all words in grouped text
+#'   (e.g., sentences or paragraphs).
+#' - **`causal_tokens_layers()`**: Extract layers for all tokens in a single text.
+#'
+#' @param contexts A character vector of context strings (for `causal_targets_layers_lst`).
+#' @param targets A character vector of target words/phrases (for `causal_targets_layers_lst`).
+#' @param x A character vector of words (for `causal_words_layers_lst`) or a single 
+#'   string (for `causal_tokens_layers`).
+#' @param by A vector for grouping elements of `x` (for `causal_words_layers_lst`).
+#' @param text A single string (for `causal_tokens_layers`).
+#' @param layers Integer vector specifying which layers to extract. Use `NULL` 
+#'   (default) to extract all layers. Layer 0 is the non-contextualized embeddings.
+#' @param return_type Either "list" (default) or "array". If "list", returns a 
+#'   named list with one element per layer. If "array", returns a 3D array with
+#'   dimensions [layers, tokens, hidden_size].
+#' @inheritParams causal_targets_pred
+#' @inheritParams causal_words_pred
+#' @param merge_fun Function to merge multi-token words into single representations.
+#'   Default is `colMeans` which averages across tokens for each dimension. 
+#'   The function should take a matrix [n_tokens, hidden_dim] and return 
+#'   a vector of length hidden_dim.
+#'   Other options: `function(x) x[1,]` (use first token only), 
+#'   `colSums` (sum across tokens), or any custom function.
+#'   Set to `NULL` to disable merging and return all tokens separately 
+#'   (output will be a matrix [n_tokens, hidden_dim]).
+#'
+#' @return A named list or 3D array of hidden states. Structure depends on 
+#'   `return_type`:
+#'   - If "list": Named list where each element is a matrix [tokens × hidden_size]
+#'   - If "array": 3D array [layers × tokens × hidden_size]
+#'   
+#'   For `causal_words_layers_lst`, returns a list of such structures (one per group).
+#'
+#' @examples
+#' \dontrun{
+#' 
+#' # Extract layers for specific targets
+#' layers <- causal_targets_layers_lst(
+#'   contexts = c("The cat sat on the", "The dog ran in the"),
+#'   targets = c("mat", "park"),
+#'   model = "gpt2"
+#' )
+#' 
+#' # Extract only layer 0 (embeddings) and layer 12 (final layer)
+#' layers_subset <- causal_targets_layers_lst(
+#'   contexts = "The apple fell from the",
+#'   targets = "tree",
+#'   layers = c(0, 12),
+#'   model = "gpt2"
+#' )
+#' 
+#' # Get as array instead of list
+#' layers_array <- causal_targets_layers_lst(
+#'   contexts = "Once upon a",
+#'   targets = "time",
+#'   return_type = "array",
+#'   model = "gpt2"
+#' )
+#' dim(layers_array)  # [n_layers, n_tokens, hidden_size]
+#' }
+#'
+#' @family causal model functions
+#' @export
+#' @rdname causal_layer_extraction
+causal_targets_layers_lst <- function(contexts,
+                                  targets,
+                                  sep = " ",
+                                  layers = NULL,
+                                  include_embeddings = TRUE,
+                                  merge_fun = colMeans,  # Default: average
+                                  return_type = c("list", "array"),
+                                  model = getOption("pangoling.causal.default"),
+                                  checkpoint = NULL,
+                                  add_special_tokens = NULL,
+                                  config_model = NULL,
+                                  config_tokenizer = NULL,
+                                  batch_size = 1) {
+  return_type <- match.arg(return_type)
+  
+  if(any(!is_really_string(targets))) { 
+    stop2("`targets` needs to be a vector of non-empty strings.")
+  }
+  if(any(!is_really_string(contexts))) {
+    stop2("`contexts` needs to be a vector of non-empty strings.")
+  }
+  
+  message_verbose_model(model, checkpoint)
+  
+  # Load model and tokenizer
+  trf <- lang_model(model,
+                    checkpoint = checkpoint,
+                    task = "causal",
+                    output_hidden_states = TRUE,
+                    config_model = config_model)
+  tkzr <- tokenizer(model,
+                    add_special_tokens = add_special_tokens,
+                    config_tokenizer = config_tokenizer)
+  
+  # Combine contexts and targets
+  x <- c(rbind(contexts, targets))
+  by <- rep(seq_len(length(x)/2), each = 2)
+  word_by_word_texts <- split(x, by, drop = TRUE)
+  
+  pasted_texts <- conc_words(word_by_word_texts, sep = sep)
+  
+  # Create tensors
+  tensors <- create_tensor_lst(
+    texts = unname(pasted_texts),
+    tkzr = tkzr,
+    add_special_tokens = add_special_tokens,
+    stride = 1,
+    batch_size = batch_size
+  )
+  
+  # Process each tensor to extract layers for target tokens
+  result <- lapply(seq_along(tensors), function(i) {
+    tensor <- tensors[[i]]
+    words <- word_by_word_texts[[i]]
+    target <- words[2]  # Second element is always the target
+    
+    # Get model output with hidden states
+    output <- trf(tensor$input_ids)
+    
+    # Tokenize to find target positions
+    context_ids <- get_id(words[1], model = model, 
+                          add_special_tokens = add_special_tokens,
+                          config_tokenizer = config_tokenizer)[[1]]
+    target_ids <- get_id(paste0(sep, target), model = model,
+                         add_special_tokens = add_special_tokens, 
+                         config_tokenizer = config_tokenizer)[[1]]
+    
+    # Target starts after context
+    n_context_tokens <- length(context_ids)
+    target_positions <- seq(n_context_tokens, 
+                            n_context_tokens + length(target_ids) - 1)
+    
+    # Extract hidden states for target positions
+    hidden_states <- extract_hidden_states(
+      model_output = output,
+      layers = layers,
+      token_positions = target_positions,
+      include_embeddings = include_embeddings,
+      model = trf,
+      input_ids = tensor$input_ids,
+      task = "causal"
+    )
+    
+    # Merge multi-token words if requested
+    if (!is.null(merge_fun) && length(target_ids) > 1) {
+      # All target tokens should be merged into one word
+      token_groups <- list(seq_along(target_positions))
+      hidden_states <- merge_tokens(hidden_states, token_groups, merge_fun)
+    }
+    
+    # If merge_fun is NULL and we have multiple tokens, 
+    # the output will be [n_tokens, hidden_dim] per layer
+    
+    # Determine actual layers extracted
+    actual_layers <- if (is.null(layers)) {
+      if (include_embeddings) {
+        c(-1, seq(0, length(output$hidden_states) - 1))
+      } else {
+        seq(0, length(output$hidden_states) - 1)
+      }
+    } else {
+      layers
+    }
+    
+    format_layer_output(hidden_states, actual_layers, return_type)
+  })
+  
+  names(result) <- targets
+  
+  # If only one target, return the structure directly
+  if (length(result) == 1) {
+    return(result[[1]])
+  }
+  
+  result
+}
+
+#' @export
+#' @rdname causal_layer_extraction
+causal_words_layers_lst <- function(x,
+                                by = rep(1, length(x)),
+                                sep = " ",
+                                layers = NULL,
+                                include_embeddings = TRUE,
+                                merge_fun = colMeans,
+                                return_type = c("list", "array"),
+                                sorted = FALSE,
+                                model = getOption("pangoling.causal.default"),
+                                checkpoint = NULL,
+                                add_special_tokens = NULL,
+                                config_model = NULL,
+                                config_tokenizer = NULL,
+                                batch_size = 1) {
+  return_type <- match.arg(return_type)
+  
+  # Better error checking
+  if (is.data.frame(x)) {
+    stop2("`x` must be a character vector, not a data frame. ",
+          "Did you mean to use `x = your_df$word_column`?")
+  }
+  
+  if (is.data.frame(by)) {
+    stop2("`by` must be a vector, not a data frame. ",
+          "Did you mean to use `by = your_df$group_column`?")
+  }
+  
+  if (!is.character(x)) {
+    stop2("`x` must be a character vector, got ", class(x)[1], " instead.")
+  }
+  
+  if (any(!is_really_string(x))) {
+    stop2("`x` needs to be a vector of non-empty strings.")
+  }
+  
+  if (length(x) != length(by)) {
+    stop2("`x` and `by` must have the same length. ",
+          "`x` has length ", length(x), " but `by` has length ", length(by), ".")
+  }
+  
+  message_verbose_model(model, checkpoint)
+  
+  # Load model and tokenizer
+  trf <- lang_model(model,
+                    checkpoint = checkpoint,
+                    task = "causal",
+                    output_hidden_states = TRUE,
+                    config_model = config_model)
+  tkzr <- tokenizer(model,
+                    add_special_tokens = add_special_tokens,
+                    config_tokenizer = config_tokenizer)
+  
+  # Group words
+  word_by_word_texts <- split(x, by)
+  pasted_texts <- conc_words(word_by_word_texts, sep = sep)
+  
+  # Create tensors
+  tensors <- create_tensor_lst(
+    texts = unname(pasted_texts),
+    tkzr = tkzr,
+    add_special_tokens = add_special_tokens,
+    stride = 1,
+    batch_size = batch_size
+  )
+  
+  # Extract layers for each group
+  result <- tidytable::map2(
+    tensors,
+    word_by_word_texts,
+    function(tensor, words) {
+      output <- trf(tensor$input_ids)
+      
+      # Extract all hidden states
+      hidden_states <- extract_hidden_states(
+        model_output = output,
+        layers = layers,
+        token_positions = NULL,  # Get all positions
+        include_embeddings = include_embeddings,
+        model = trf,
+        input_ids = tensor$input_ids,
+        task = "causal"
+      )
+      
+      # Tokenize each word to get token groups
+      word_token_lists <- lapply(seq_along(words), function(i) {
+        w <- words[i]
+        if (i == 1) {
+          get_id(w, model = model,
+                 add_special_tokens = add_special_tokens,
+                 config_tokenizer = config_tokenizer)[[1]]
+        } else {
+          get_id(paste0(sep, w), model = model,
+                 add_special_tokens = add_special_tokens,
+                 config_tokenizer = config_tokenizer)[[1]]
+        }
+      })
+      
+      # Create token groups (which tokens belong to which word)
+      token_groups <- list()
+      current_pos <- 1
+      for (i in seq_along(word_token_lists)) {
+        n_tokens <- length(word_token_lists[[i]])
+        token_groups[[i]] <- seq(current_pos, current_pos + n_tokens - 1)
+        current_pos <- current_pos + n_tokens
+      }
+      
+      # Extract layers for each word separately
+      word_layers <- lapply(seq_along(words), function(i) {
+        word_token_positions <- token_groups[[i]]
+        
+        # Extract just this word's tokens from each layer
+        word_hidden_states <- lapply(hidden_states, function(layer_matrix) {
+          layer_matrix[word_token_positions, , drop = FALSE]
+        })
+        
+        # Merge if requested
+        if (!is.null(merge_fun)) {
+          word_hidden_states <- merge_tokens(
+            word_hidden_states, 
+            list(seq_along(word_token_positions)),  # All tokens in this word
+            merge_fun
+          )
+          # merge_tokens returns vectors for single words
+          # Ensure they stay as vectors (not [1, 768] matrices)
+          word_hidden_states <- lapply(word_hidden_states, function(layer_data) {
+            if (is.matrix(layer_data) && nrow(layer_data) == 1) {
+              # Convert [1, 768] matrix to vector of length 768
+              as.vector(layer_data)
+            } else {
+              layer_data
+            }
+          })
+        }
+        
+        # Determine actual layers
+        actual_layers <- if (is.null(layers)) {
+          if (include_embeddings) {
+            c(-1, seq(0, length(output$hidden_states) - 1))
+          } else {
+            seq(0, length(output$hidden_states) - 1)
+          }
+        } else {
+          layers
+        }
+        
+        format_layer_output(word_hidden_states, actual_layers, return_type)
+      })
+      
+      names(word_layers) <- words
+      word_layers
+    }
+  )
+  
+  names(result) <- levels(as.factor(by))
+  if(!sorted) result <- result[unique(as.factor(by))]
+  
+  result
+}
+
+
+#' @export
+#' @rdname causal_layer_extraction
+causal_tokens_layers <- function(text,
+                                 layers = NULL,
+                                 include_embeddings = TRUE,
+                                 merge_fun = NULL,
+                                 return_type = c("list", "array"),
+                                 model = getOption("pangoling.causal.default"),
+                                 checkpoint = NULL,
+                                 add_special_tokens = NULL,
+                                 config_model = NULL,
+                                 config_tokenizer = NULL) {
+  return_type <- match.arg(return_type)
+  
+  # Allow multiple texts
+  if (!is.character(text)) {
+    stop2("`text` must be a character vector, got ", class(text)[1], " instead.")
+  }
+  
+  if (any(!is_really_string(text))) {
+    stop2("`text` needs to be a vector of non-empty strings.")
+  }
+  
+  message_verbose_model(model, checkpoint)
+  
+  # Load model and tokenizer
+  trf <- lang_model(model,
+                    checkpoint = checkpoint,
+                    task = "causal",
+                    output_hidden_states = TRUE,
+                    config_model = config_model)
+  tkzr <- tokenizer(model,
+                    add_special_tokens = add_special_tokens,
+                    config_tokenizer = config_tokenizer)
+  
+  # Process each text
+  result <- lapply(seq_along(text), function(text_idx) {
+    current_text <- text[text_idx]
+    
+    # Tokenize
+    tensor <- encode(list(current_text), tkzr, 
+                     add_special_tokens = add_special_tokens)
+    
+    # Get tokens as strings
+    tokens <- tokenize_lst(current_text, 
+                           model = model,
+                           add_special_tokens = add_special_tokens,
+                           config_tokenizer = config_tokenizer)[[1]]
+    
+    # Get model output
+    output <- trf(tensor$input_ids)
+    
+    # Extract hidden states (all tokens)
+    hidden_states <- extract_hidden_states(
+      model_output = output,
+      layers = layers,
+      token_positions = NULL,
+      include_embeddings = include_embeddings,
+      model = trf,
+      input_ids = tensor$input_ids,
+      task = "causal"
+    )
+    
+    # Determine actual layers
+    actual_layers <- if (is.null(layers)) {
+      if (include_embeddings) {
+        c(-1, seq(0, length(output$hidden_states) - 1))
+      } else {
+        seq(0, length(output$hidden_states) - 1)
+      }
+    } else {
+      layers
+    }
+    
+    # If merge_fun is provided, we can't really "merge" at token level
+    # because each token is independent. Ignore merge_fun for tokens_layers.
+    if (!is.null(merge_fun)) {
+      warning("merge_fun is not applicable for causal_tokens_layers and will be ignored.")
+    }
+    
+    # Restructure: instead of [layers -> tokens x hidden_dim]
+    # Return: [tokens -> layers -> hidden_dim vector]
+    n_tokens <- length(tokens)
+    
+    token_layers <- lapply(seq_len(n_tokens), function(token_idx) {
+      # Extract this token from all layers
+      token_hidden_states <- lapply(hidden_states, function(layer_matrix) {
+        as.vector(layer_matrix[token_idx, ])
+      })
+      
+      format_layer_output(token_hidden_states, actual_layers, return_type)
+    })
+    
+    names(token_layers) <- tokens
+    token_layers
+  })
+  
+  # If only one text, return the structure directly (not wrapped in list)
+  if (length(result) == 1) {
+    return(result[[1]])
+  }
+  
+  # For multiple texts, name them
+  if (!is.null(names(text))) {
+    names(result) <- names(text)
+  } else {
+    names(result) <- paste0("text_", seq_along(text))
+  }
+  
+  result
 }

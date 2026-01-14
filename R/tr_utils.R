@@ -177,10 +177,12 @@ lst_to_kwargs <- function(x) {
   var_to_py("kwargs", x)
 }
 
+
 #' @noRd
 lang_model <- function(model = "gpt2", 
                        checkpoint = NULL, 
                        task = "causal", 
+                       output_hidden_states = FALSE,
                        config_model = NULL) {
   reticulate::py_run_string(
                 'import os\nos.environ["TOKENIZERS_PARALLELISM"] = "false"'
@@ -209,6 +211,7 @@ gc.collect()")
   lst_to_kwargs(c(
     pretrained_model_name_or_path = model,
     return_dict_in_generate = TRUE,
+    output_hidden_states = output_hidden_states,
     config_model
   ))
   reticulate::py_run_string(paste0(
@@ -503,4 +506,220 @@ set_cache_folder <- function(path = NULL){
       "https://huggingface.co/docs/transformers/installation?highlight=transformers_cache#cache-setup")
   }
 
+}
+
+#' Unload transformer model and free memory
+#' @noRd
+transformer_unload <- function() {
+  message_verbose("Unloading transformer model and freeing memory...")
+  
+  # Delete model if it exists
+  reticulate::py_run_string('there = "lm" in locals()')
+  if (reticulate::py$there) {
+    message_verbose("Deleting model object...")
+    reticulate::py_run_string("del lm")
+  }
+  
+  # Delete tokenizer if it exists
+  reticulate::py_run_string('there = "tkzr" in locals()')
+  if (reticulate::py$there) {
+    message_verbose("Deleting tokenizer object...")
+    reticulate::py_run_string("del tkzr")
+  }
+  
+  # Clear CUDA cache if using GPU
+  reticulate::py_run_string("
+import torch
+if torch.cuda.is_available():
+    torch.cuda.empty_cache()
+")
+  
+  # Python garbage collection
+  reticulate::py_run_string("
+import gc
+gc.collect()
+")
+  
+  # R garbage collection
+  gc(full = TRUE)
+  
+  message_verbose("Model unloaded and memory freed.")
+  invisible()
+}
+
+
+
+#' Extract raw token embeddings (no positional encoding)
+#' @noRd
+get_token_embeddings <- function(model, input_ids, task = "causal") {
+  # Get the token embedding layer (before positional encoding)
+  if (task == "causal") {
+    # GPT-2 and similar: model.transformer.wte (word token embeddings)
+    token_embed_layer <- model$transformer$wte
+  } else if (task == "masked") {
+    # BERT and similar: model.bert.embeddings.word_embeddings
+    # Try different paths as BERT architectures vary
+    if (!is.null(model$bert)) {
+      token_embed_layer <- model$bert$embeddings$word_embeddings
+    } else if (!is.null(model$roberta)) {
+      token_embed_layer <- model$roberta$embeddings$word_embeddings
+    } else if (!is.null(model$embeddings)) {
+      token_embed_layer <- model$embeddings$word_embeddings
+    } else {
+      stop2("Could not find word embeddings in model. ",
+            "Model architecture may not be supported.")
+    }
+  } else {
+    stop2("Task must be 'causal' or 'masked'.")
+  }
+  
+  # Get embeddings
+  embeddings <- token_embed_layer(input_ids)
+  
+  # Convert to numpy then R
+  emb_array <- reticulate::py_to_r(embeddings$detach()$numpy())
+  
+  # Remove batch dimension if batch size is 1
+  if (dim(emb_array)[1] == 1) {
+    emb_array <- emb_array[1, , , drop = FALSE]
+    dim(emb_array) <- dim(emb_array)[-1]
+  }
+  
+  emb_array
+}
+
+#' Extract hidden states from model output
+#' @noRd
+extract_hidden_states <- function(model_output, 
+                                  layers = NULL, 
+                                  token_positions = NULL,
+                                  include_embeddings = TRUE,
+                                  model = NULL,
+                                  input_ids = NULL,
+                                  task = "causal") {
+  if (is.null(model_output$hidden_states)) {
+    stop2("Model output does not contain hidden_states. ",
+          "Please preload the model with output_hidden_states = TRUE.")
+  }
+  
+  # hidden_states is a Python tuple of tensors
+  hidden_states <- model_output$hidden_states
+  
+  # Determine available layers
+  # hidden_states[0] is typically layer 0 (embeddings with positional encoding)
+  # We'll add raw token embeddings as layer -1
+  max_layer <- length(hidden_states) - 1
+  
+  # If layers not specified, return all layers
+  if (is.null(layers)) {
+    if (include_embeddings && !is.null(model) && !is.null(input_ids)) {
+      layers <- c(-1, seq(0, max_layer))  # -1 for token embeddings
+    } else {
+      layers <- seq(0, max_layer)
+    }
+  }
+  
+  # Validate layer indices
+  if (any(layers < -1) || any(layers > max_layer)) {
+    stop2("Layer indices must be between -1 and ", max_layer, 
+          " (-1 = token embeddings, 0 = embeddings + positional, 1-", 
+          max_layer, " = transformer layers).")
+  }
+  
+  # Extract specified layers and convert to R
+  result <- lapply(layers, function(layer_idx) {
+    if (layer_idx == -1) {
+      # Extract raw token embeddings
+      if (is.null(model) || is.null(input_ids)) {
+        stop2("model and input_ids must be provided to extract layer -1 (token embeddings).")
+      }
+      arr <- get_token_embeddings(model, input_ids, task)
+    } else {
+      # Get the tensor for this layer (Python uses 0-indexing)
+      layer_tensor <- hidden_states[[layer_idx + 1]]  # R uses 1-indexing for lists
+      
+      # Convert to numpy array first
+      arr <- reticulate::py_to_r(layer_tensor$detach()$numpy())
+      
+      # Remove batch dimension if batch size is 1
+      if (length(dim(arr)) == 3 && dim(arr)[1] == 1) {
+        arr <- arr[1, , , drop = FALSE]
+        dim(arr) <- dim(arr)[-1]  # Now it's [seq_len, hidden_dim]
+      }
+    }
+    
+    # If token_positions specified, extract only those positions
+    if (!is.null(token_positions)) {
+      if (length(dim(arr)) == 2) {
+        # Already removed batch dimension: [seq_len, hidden_dim]
+        arr <- arr[token_positions, , drop = FALSE]
+      } else {
+        # Still has batch dimension: [batch, seq_len, hidden_dim]
+        arr <- arr[, token_positions, , drop = FALSE]
+      }
+    }
+    
+    arr
+  })
+  
+  result
+}
+
+
+#' Merge multi-token representations
+#' @noRd
+merge_tokens <- function(layer_list, 
+                         token_groups, 
+                         merge_fun) {
+  # Apply merging to each layer
+  lapply(layer_list, function(layer_matrix) {
+    # layer_matrix is [n_tokens, hidden_dim]
+    n_words <- length(token_groups)
+    
+    if (n_words == 1) {
+      # Single word - ALWAYS return as vector when merging
+      token_idx <- token_groups[[1]]
+      if (length(token_idx) == 1) {
+        # Single token - return as vector
+        as.vector(layer_matrix[token_idx, ])
+      } else {
+        # Multiple tokens - merge and return as vector
+        # token_matrix is [n_tokens_in_word, hidden_dim]
+        token_matrix <- layer_matrix[token_idx, , drop = FALSE]
+        # merge_fun should work on the matrix and return a vector of length hidden_dim
+        # For averaging: we want mean across tokens (rows) for each dimension (column)
+        as.vector(merge_fun(token_matrix))
+      }
+    } else {
+      # Multiple words - return as matrix [n_words, hidden_dim]
+      merged_list <- lapply(token_groups, function(token_idx) {
+        if (length(token_idx) == 1) {
+          layer_matrix[token_idx, ]
+        } else {
+          token_matrix <- layer_matrix[token_idx, , drop = FALSE]
+          merge_fun(token_matrix)
+        }
+      })
+      do.call(rbind, merged_list)
+    }
+  })
+}
+
+#' Format layer outputs as a named list or array
+#' @noRd
+format_layer_output <- function(layer_list, 
+                                layers, 
+                                return_type = c("list", "array")) {
+  return_type <- match.arg(return_type)
+  
+  # Name the layers
+  layer_names <- ifelse(layers == -1, "token_embeddings", paste0("layer_", layers))
+  names(layer_list) <- layer_names
+  
+  if (return_type == "list") {
+    return(layer_list)
+  } else {
+    # Convert to 3D array: [layers, tokens/words, hidden_size]
+    return(simplify2array(layer_list))
+  }
 }

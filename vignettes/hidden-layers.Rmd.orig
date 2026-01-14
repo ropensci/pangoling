@@ -1,0 +1,213 @@
+---
+title: "Working with hidden layer representations"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Working with hidden layer representations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(pangoling)
+library(philentropy) # to compute all sort of distances
+library(tidytable)
+```
+
+## Introduction
+
+Transformer models like GPT-2 and BERT don't just predict words—they build rich, layered representations of language. Each layer in a transformer processes the input text differently, creating progressively more contextualized representations. This vignette shows you how to extract and analyze these hidden layer representations using `pangoling`.
+
+## Understanding hidden states
+
+### What are hidden states?
+
+When a transformer model processes text, it creates representations at multiple levels:
+
+1. **Token embedding**: The initial token embeddings (non-contextualized)
+2. **Layers 0-N**: Progressively more contextualized representations from each transformer block
+
+Each hidden state is a vector of numbers (typically 768 dimensions for base models like GPT-2 and BERT) that captures semantic and syntactic information about the token.
+
+### Why extract hidden states?
+
+Hidden layer representations are useful for:
+
+- **Probing tasks**: Understanding what linguistic information is encoded where
+- **Representation analysis**: Studying how meaning emerges through layers
+- **Semantic similarity**: Computing similarity between words in context
+- **Transfer learning**: Using representations for downstream tasks
+- **Model interpretability**: Understanding what the model "knows"
+
+## Basic Usage
+
+
+### Extracting Layers for Target Words
+
+The most common use case is extracting representations for specific target words. Here crane appears in two different contexts making it mean either a bird or a machine:
+
+```{r, layers}
+sentences <- data.frame(contexts = c("The bird by the lake was a", "The tall machine at the building site was a"),
+  targets = c("crane", "crane"))
+sentences
+
+layers <- causal_targets_layers(
+  contexts = sentences$contexts,
+  targets = sentences$targets,  
+  model = "gpt2"
+)
+
+str(layers)
+```
+
+Each element is a matrix where rows are tokens and columns are hidden dimensions. You don't always need all layers. Use the `layers` parameter to specify which ones to extract.
+
+This is much more memory-efficient when you only need specific layers.
+
+By default, layers are returned as a named list. But for numerical computations, arrays are often more convenient. (But notice that each target is still an element of a list).
+
+
+
+```{r layers_array}
+layers_array <- causal_targets_layers(
+  contexts = sentences$contexts,
+  targets = sentences$targets,  
+  return_type = "array",
+  model = "gpt2"
+)
+
+str(layers_array)
+```
+
+## Understanding layers
+
+`token_embeddings` is is special: it contains the token embeddings before any contextualization or position information. This means the same token always has the same layer 0 representation, regardless of context:
+
+```{r layer0 }
+all.equal(layers[[1]]$token_embeddings, layers[[2]]$token_embeddings)
+```
+
+But higher layers should differ because they incorporate context:
+
+```{r layer12}
+all.equal(layers[[1]]$layer_12, layers[[2]]$layer_12)
+```
+
+What about the distance between the layer 0 which only contains the position information and the last layer?
+
+```{r}
+
+map2(layers[[1]], layers[[2]], ~ distance(rbind(.x,
+               .y), method = "cosine"))
+
+```
+
+The distances are weirdly similar. 
+Three separate issues tend to collapse the contrast: [look for citation]
+
+Cosine is scale-invariant and often high for semantically related uses. "A crane" in both sentences is still the same surface form, same syntactic slot, and both senses are concrete nouns. Cosine can remain relatively high even when a probe would show disambiguation.
+
+Most of the representation is not "sense." Hidden states encode many factors (syntax, position, frequency effects, local n-gram structure). The "sense component" can be a small subspace, so raw vector distances may not explode.
+
+GPT-2’s final layer is optimized for next-token prediction, not for separating senses in embedding space. Disambiguation may be present, but not in a way that is maximally visible to cosine distance on the full vector.
+
+
+
+
+```{r}
+
+df_sent <- strsplit(x = paste(sentences$contexts,sentences$targets), split = " ") |>
+  map_dfr(.f = ~ data.frame(word = .x), .id = "sent_n")
+df_sent
+w_layers <- causal_words_layers(x = df_sent$word, by = df_sent$sent_n, model = "gpt2")
+
+w_layers |> str()
+
+causal_words_layers(x = c("the", "house."), model = "gpt2") |> str()
+
+```
+
+
+## Analyzing Representations Across Layers
+
+A common analysis is to track how representations change through the layers:
+
+```{r, eval=FALSE}
+# Extract all layers
+all_layers <- causal_targets_layers(
+  contexts = "The cat sat on the",
+  targets = "mat",
+  return_type = "array",
+  model = "gpt2"
+)
+
+# Compute norm of representation at each layer
+
+layer_norms <- sapply(1:dim(all_layers)[1], function(i) {
+  sqrt(sum(all_layers[i, , ]^2))
+})
+
+# Plot how representation magnitude changes
+tibble(
+  layer = 0:12,
+  norm = layer_norms
+) %>%
+  ggplot(aes(x = layer, y = norm)) +
+  geom_line() +
+  geom_point() +
+  labs(
+    title = "Representation Magnitude Across Layers",
+    x = "Layer",
+    y = "L2 Norm"
+  )
+```
+
+Some words are split into multiple tokens. The functions handle this automatically.
+You can average across tokens to get a single representation:
+
+```{r }
+
+```
+
+## Other Layer Extraction Functions
+
+
+### Extract Layers for All Tokens
+
+Use `causal_tokens_layers()` to extract layers for an entire text:
+
+```{r}
+layers_text <- causal_tokens_layers(
+  text = c("The quick brown fox jumps over the lazy dog","The quick brown fox jumps over the lazy dog"),
+  layers = c(0, 6, 12),
+  model = "gpt2"
+)
+
+layers_text |> str()
+```
+
+## Working with BERT (Masked Models)
+
+BERT and other masked models use bidirectional context. Use `masked_targets_layers()`:
+
+```{r}
+
+layers_bert <- masked_targets_layers(
+  prev_contexts = "The cat sat on the",
+  targets = "mat",
+  after_contexts = "near the door",
+  layers = c(0, 12),
+  model = "bert-base-uncased"
+)
+
+# BERT representations incorporate both left and right context
+dim(layers_bert$layer_12)
+#> [1]   1 768
+```
+

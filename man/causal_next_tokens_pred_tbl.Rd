@@ -107,6 +107,7 @@ causal_next_tokens_pred_tbl(
 \seealso{
 Other causal model functions: 
 \code{\link{causal_pred_mats}()},
+\code{\link{causal_targets_layers}()},
 \code{\link{causal_words_pred}()}
 }
 \concept{causal model functions}

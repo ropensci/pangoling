@@ -6,6 +6,7 @@
 \usage{
 masked_preload(
   model = getOption("pangoling.masked.default"),
+  output_hidden_states = FALSE,
   add_special_tokens = NULL,
   config_model = NULL,
   config_tokenizer = NULL
@@ -15,6 +16,10 @@ masked_preload(
 \item{model}{Name of a pre-trained model or folder. One should be able to use
 models based on "bert". See
 \href{https://huggingface.co/models?other=bert}{hugging face website}.}
+
+\item{output_hidden_states}{Logical. If TRUE, the model will return hidden
+states from all layers, which can be extracted using the *_layers() functions.
+Default is FALSE. Note: Setting this to TRUE increases memory usage.}
 
 \item{add_special_tokens}{Whether to include special tokens. It has the
 same default as the
@@ -61,6 +66,7 @@ causal_preload(model = "bert-base-uncased")
 }
 \seealso{
 Other masked model helper functions: 
-\code{\link{masked_config}()}
+\code{\link{masked_config}()},
+\code{\link{masked_unload}()}
 }
 \concept{masked model helper functions}

@@ -35,16 +35,57 @@
 #' @export
 #'
 masked_preload <- function(model = getOption("pangoling.masked.default"),
+                           output_hidden_states = FALSE,
                            add_special_tokens = NULL,
                            config_model = NULL, config_tokenizer = NULL) {
   message_verbose("Preloading masked model ", model, "...")
 
-  lang_model(model, task = "masked", config_model)
+  lang_model(model, 
+             task = "masked", 
+             output_hidden_states = output_hidden_states,
+             config_model = config_model)
   tokenizer(model, add_special_tokens = add_special_tokens, config_tokenizer)
   invisible()
 }
 
-
+#' Unload a masked language model and free memory
+#'
+#' Unloads a masked language model and its tokenizer from memory, and triggers
+#' garbage collection to free up RAM and GPU memory.
+#'
+#' @details
+#' This function helps manage memory when working with large models. It:
+#' - Deletes the model and tokenizer objects from Python
+#' - Empties the CUDA cache (if using GPU)
+#' - Triggers garbage collection in both Python and R
+#'
+#' It's particularly useful when:
+#' - Switching between different models
+#' - Working with limited memory
+#' - Running multiple models sequentially
+#'
+#' @return Nothing (called for side effects).
+#'
+#' @examplesIf installed_py_pangoling()
+#' # Load a model
+#' masked_preload(model = "bert-base-uncased")
+#' 
+#' # Do some work...
+#' pred <- masked_targets_pred(
+#'   prev_contexts = "The cat", 
+#'   targets = "sat",
+#'   after_contexts = "down",
+#'   model = "bert-base-uncased"
+#' )
+#' 
+#' # Unload when done
+#' masked_unload()
+#'
+#' @family masked model helper functions
+#' @export
+masked_unload <- function() {
+  transformer_unload()
+}
 #' Returns the configuration of a masked model
 #'
 #' Returns the configuration of a masked model.
@@ -350,4 +391,106 @@ masked_lp_mat <- function(tensor_lst,
   })
   gc(full = TRUE)
   lmat
+}
+
+
+#' @export
+masked_targets_layers <- function(prev_contexts,
+                                  targets,
+                                  after_contexts,
+                                  layers = NULL,
+                                  include_embeddings = TRUE,
+                                  merge_fun = rowMeans,
+                                  return_type = c("list", "array"),
+                                  model = getOption("pangoling.masked.default"),
+                                  checkpoint = NULL,
+                                  add_special_tokens = NULL,
+                                  config_model = NULL,
+                                  config_tokenizer = NULL) {
+  return_type <- match.arg(return_type)
+  
+  if(any(!is_really_string(targets))) {
+    stop2("`targets` needs to be a vector of non-empty strings.")
+  }
+  
+  message_verbose_model(model, checkpoint = checkpoint, causal = FALSE)
+  
+  # Load model and tokenizer
+  tkzr <- tokenizer(model,
+                    add_special_tokens = add_special_tokens,
+                    config_tokenizer = config_tokenizer)
+  trf <- lang_model(model,
+                    checkpoint = checkpoint,
+                    task = "masked",
+                    output_hidden_states = TRUE,
+                    config_model = config_model)
+  
+  # Process each target
+  result <- tidytable::pmap(
+    list(prev_contexts, targets, after_contexts),
+    function(prev, target, after) {
+      # Create full sentence with target (not masked)
+      full_text <- paste(prev, target, after)
+      
+      # Tokenize to find target positions
+      tensor <- encode(list(full_text), tkzr,
+                       add_special_tokens = add_special_tokens)
+      
+      # Get model output
+      output <- trf(tensor$input_ids)
+      
+      # Find target token positions
+      prev_ids <- get_id(prev, model = model,
+                         add_special_tokens = FALSE,
+                         config_tokenizer = config_tokenizer)[[1]]
+      target_ids <- get_id(target, model = model,
+                           add_special_tokens = FALSE,
+                           config_tokenizer = config_tokenizer)[[1]]
+      
+      # Account for special tokens at start (e.g., [CLS])
+      special_start <- if (is.null(add_special_tokens) || add_special_tokens) 1 else 0
+      
+      target_start <- special_start + length(prev_ids)
+      target_positions <- seq(target_start, 
+                              target_start + length(target_ids) - 1)
+      
+      # Extract hidden states
+      hidden_states <- extract_hidden_states(
+        model_output = output,
+        layers = layers,
+        token_positions = target_positions,
+        include_embeddings = include_embeddings,
+        model = trf,
+        input_ids = tensor$input_ids,
+        task = "masked"
+      )
+      
+      # Merge multi-token words if requested
+      if (!is.null(merge_fun) && length(target_ids) > 1) {
+        token_groups <- list(seq_along(target_positions))
+        hidden_states <- merge_tokens(hidden_states, token_groups, merge_fun)
+      }
+      
+      # Determine actual layers
+      actual_layers <- if (is.null(layers)) {
+        if (include_embeddings) {
+          c(-1, seq(0, length(output$hidden_states) - 1))
+        } else {
+          seq(0, length(output$hidden_states) - 1)
+        }
+      } else {
+        layers
+      }
+      
+      format_layer_output(hidden_states, actual_layers, return_type)
+    }
+  )
+  
+  names(result) <- targets
+  
+  if (length(result) == 1) {
+    return(result[[1]])
+  }
+  
+  result
 }

@@ -59,6 +59,7 @@ causal_config(model = "gpt2")
 }
 \seealso{
 Other causal model helper functions: 
-\code{\link{causal_preload}()}
+\code{\link{causal_preload}()},
+\code{\link{causal_unload}()}
 }
 \concept{causal model helper functions}

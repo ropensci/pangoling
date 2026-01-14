@@ -1,0 +1,21 @@
+add documentation to lang_model
+
+
+Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+
+
+
+
+check what happens with different batches size
+
+causal_targets_layers(
+  contexts = c("The bird by the lake was a", "The tall machine at the building site was a"),
+  targets = "crane",
+  model = "gpt2"
+)
+
+---
+it doesn't repeat crane twice as with pred
+
+
+by ="sent" should throw an error

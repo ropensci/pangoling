@@ -8,3 +8,4 @@ skip_if_no_python_stuff <- function() {
     skip("transformers not available for torch")
   }
 }
+
