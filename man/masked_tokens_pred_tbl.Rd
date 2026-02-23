@@ -81,7 +81,7 @@ in pangoling website for more examples.
 }
 
 \examples{
-\dontshow{if (installed_py_pangoling()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (installed_py_pangoling()) withAutoprint(\{ # examplesIf}
 masked_tokens_pred_tbl("The [MASK] doesn't fall far from the tree.",
   model = "bert-base-uncased"
 )

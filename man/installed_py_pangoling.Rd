@@ -25,8 +25,10 @@ if (installed_py_pangoling()) {
 }
 \seealso{
 Other helper functions: 
+\code{\link{cached_models}()},
 \code{\link{install_py_pangoling}()},
 \code{\link{installed_py_pangoling_list}()},
+\code{\link{remove_cached_model}()},
 \code{\link{set_cache_folder}()}
 }
 \concept{helper functions}

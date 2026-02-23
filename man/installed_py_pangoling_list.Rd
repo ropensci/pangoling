@@ -35,8 +35,10 @@ installed_py_pangoling_list()
 \code{\link[reticulate:py_version]{reticulate::py_version()}}, \code{\link[reticulate:py_list_packages]{reticulate::py_list_packages()}}
 
 Other helper functions: 
+\code{\link{cached_models}()},
 \code{\link{install_py_pangoling}()},
 \code{\link{installed_py_pangoling}()},
+\code{\link{remove_cached_model}()},
 \code{\link{set_cache_folder}()}
 }
 \concept{helper functions}

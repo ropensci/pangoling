@@ -94,7 +94,7 @@ in pangoling website for more examples.
 }
 
 \examples{
-\dontshow{if (installed_py_pangoling()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (installed_py_pangoling()) withAutoprint(\{ # examplesIf}
 masked_targets_pred(
   prev_contexts = c("The", "The"),
   targets = c("apple", "pear"),

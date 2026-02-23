@@ -35,7 +35,7 @@ A vector with the vocabulary of a model.
 Returns the (decoded) vocabulary of a model.
 }
 \examples{
-\dontshow{if (installed_py_pangoling()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (installed_py_pangoling()) withAutoprint(\{ # examplesIf}
 transformer_vocab(model = "gpt2") |>
  head()
 \dontshow{\}) # examplesIf}

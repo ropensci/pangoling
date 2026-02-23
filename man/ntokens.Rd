@@ -33,7 +33,7 @@ The number of tokens in a string or vector of words.
 The number of tokens in a string or vector of strings
 }
 \examples{
-\dontshow{if (installed_py_pangoling()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (installed_py_pangoling()) withAutoprint(\{ # examplesIf}
 ntokens(x = c("The apple doesn't fall far from the tree."), model = "gpt2")
 \dontshow{\}) # examplesIf}
 }
