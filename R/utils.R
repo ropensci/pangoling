@@ -55,7 +55,7 @@
 #' }
 #' 
 #' @export
-install_py_pangoling <- function(method = c("auto", "virtualenv", "conda"), 
+install_py_pangoling <- function(method = c("auto", "virtualenv", "conda"),
                                  conda = "auto",
                                  version = "default", 
                                  envname = "r-pangoling", 
