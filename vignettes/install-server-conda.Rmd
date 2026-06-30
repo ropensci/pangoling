@@ -1,0 +1,238 @@
+---
+title: "Installing pangoling on a server with conda"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Installing pangoling on a server with conda}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+This vignette is a from-scratch recipe for installing `pangoling` on a headless
+(and optionally GPU) server using [conda](https://docs.conda.io/), for cases
+where R itself may not be installed. It is aimed at HPC clusters and shared
+machines, where the convenience installer `install_py_pangoling()` is often not
+enough because of Python/R environment conflicts.
+
+Two principles keep the installation from breaking:
+
+1. **Put R, all of pangoling's R dependencies, and Python in one conda
+   environment, all from conda-forge.** Everything then shares the same ABI and
+   nothing has to be compiled from source. Use CRAN's `install.packages()` only
+   for `pangoling` itself, which is pure R.
+2. **Isolate the environment** with `nomkl` (to avoid OpenMP/MKL segfaults) and a
+   few `~/.Renviron` settings, so that R uses the conda Python and ignores stray
+   packages in `~/.local`.
+
+If you are setting up on a laptop or workstation, the simpler
+`install_py_pangoling()` route described in `vignette("intro-gpt2")` and
+`vignette("troubleshooting")` is usually all you need.
+
+## 1. Create the environment (R + Python + R dependencies)
+
+Create a single conda environment containing R, Python, and all of pangoling's
+compiled R dependencies, taken from conda-forge:
+
+```bash
+conda create -n r-pangoling -c conda-forge -y \
+  python=3.9 \
+  r-base \
+  r-reticulate r-tidytable r-data.table r-memoise r-cachem \
+  r-tidyselect r-rstudioapi r-png r-remotes \
+  nomkl
+
+conda activate r-pangoling
+```
+
+Installing every compiled R package together from conda-forge guarantees they
+match the environment's R. Installing them piecemeal with `install.packages()`
+later is what causes `undefined symbol` errors (for example
+`R_duplicateAsResizable` or `R_MakeDelayedBinding`).
+
+`nomkl` replaces Intel MKL with OpenBLAS, leaving a single OpenMP runtime in the
+environment. This prevents a `*** caught segfault ***` (`memory not mapped`)
+crash during model inference, and mirrors what pangoling's own continuous
+integration does.
+
+## 2. Install the Python backend
+
+Install `transformers` and `torch` **into the conda environment**. Use
+`python -m pip` (not a bare `pip`) so the packages are guaranteed to land in the
+active environment rather than in `~/.local`.
+
+For a CPU-only server:
+
+```bash
+python -m pip install transformers numpy torch
+```
+
+For a GPU server, match the `torch` wheel to the server's CUDA driver (the
+example uses CUDA 12.4):
+
+```bash
+python -m pip install transformers numpy
+python -m pip install torch --index-url https://download.pytorch.org/whl/cu124
+```
+
+Confirm that all three packages resolve to paths **inside** the conda
+environment (not `~/.local`):
+
+```bash
+python -c "import numpy, transformers, torch; \
+print('numpy       ', numpy.__file__); \
+print('transformers', transformers.__file__); \
+print('torch       ', torch.__version__, '| cuda:', torch.cuda.is_available())"
+```
+
+Every path should be under `.../envs/r-pangoling/...`. If `numpy` is missing,
+`torch` will emit a `Failed to initialize NumPy` warning and inference will fail.
+
+## 3. Configure `~/.Renviron`
+
+Three settings make R use the conda environment correctly. With the environment
+active, append them once:
+
+```bash
+conda activate r-pangoling
+cat >> ~/.Renviron <<EOF
+RETICULATE_PYTHON=$(which python)
+PYTHONNOUSERSITE=1
+HF_HOME=$HOME/hf_cache
+EOF
+```
+
+What each one does:
+
+- **`RETICULATE_PYTHON`** &mdash; recent versions of `reticulate` (>= 1.41)
+  otherwise create their own ephemeral `uv`-managed Python that does not contain
+  `torch` (the symptom is `ModuleNotFoundError: No module named 'torch'` and a
+  `py_config()` pointing at `~/.cache/R/reticulate/uv/...`). This pins reticulate
+  to the conda environment.
+- **`PYTHONNOUSERSITE=1`** &mdash; stops stale packages in `~/.local` from
+  shadowing the conda environment (a typical symptom is
+  `cannot import name 'ParamSpec' from 'typing_extensions'`).
+- **`HF_HOME`** &mdash; where HuggingFace caches downloaded models, which can be
+  several GB. Point it at storage with enough space; on a cluster prefer
+  something like `/scratch/$USER/hf_cache`. See also `set_cache_folder()`.
+
+Use `>>` only once, or you will get duplicate lines; check the result with
+`cat ~/.Renviron`. If reticulate still picks its managed Python, also add
+`RETICULATE_USE_MANAGED_VENV=FALSE`.
+
+## 4. Install pangoling
+
+Because the compiled dependencies are already in place from step 1, `pangoling`
+itself can come from CRAN (it is pure R):
+
+```r
+install.packages("pangoling")
+```
+
+Or the development version:
+
+```r
+remotes::install_github("ropensci/pangoling")
+```
+
+## 5. Verify
+
+Restart R so that `~/.Renviron` is re-read, then check the configuration and run
+a prediction:
+
+```r
+library(pangoling)
+library(reticulate)
+
+py_config()                # must show .../envs/r-pangoling/bin/python, torch found
+installed_py_pangoling()   # TRUE
+
+causal_targets_pred(
+  contexts = c("The apple doesn't fall far from the",
+               "Don't judge a book by its"),
+  targets  = c("tree.", "cover."),
+  model    = "gpt2"
+)
+```
+
+The first model use downloads the model into the cache directory; subsequent runs
+work without an internet connection.
+
+## Troubleshooting
+
+**`*** caught segfault *** ... memory not mapped` during inference.** An
+OpenMP/MKL conflict. Make sure `nomkl` is installed
+(`conda install -c conda-forge nomkl -y`). If it persists, also add
+`OMP_NUM_THREADS=1`, `MKL_NUM_THREADS=1`, and `KMP_DUPLICATE_LIB_OK=TRUE` to
+`~/.Renviron`.
+
+**`cannot import name 'ParamSpec' from 'typing_extensions'`** (or other odd
+import errors mentioning `~/.local/...`). A package in `~/.local` is shadowing the
+conda environment. Ensure `PYTHONNOUSERSITE=1` is in `~/.Renviron` (step 3). You
+can confirm which file is loaded with:
+
+```r
+reticulate::py_run_string(
+  "import typing_extensions; print(typing_extensions.__file__)"
+)
+```
+
+The path must be inside the conda environment.
+
+**`ModuleNotFoundError: No module named 'torch'`** with `py_config()` pointing at
+`~/.cache/R/reticulate/uv/...`. Reticulate is using its own managed Python. Set
+`RETICULATE_PYTHON` (step 3); if it still happens, add
+`RETICULATE_USE_MANAGED_VENV=FALSE`.
+
+**`ModuleNotFoundError: No module named 'transformers'` (or `numpy`)** even though
+you installed them. They likely went into `~/.local` and are now ignored because
+of `PYTHONNOUSERSITE=1`. Reinstall into the environment with the environment's own
+pip:
+
+```bash
+conda activate r-pangoling
+python -m pip install --force-reinstall transformers numpy torch
+```
+
+**`unable to load shared object ... undefined symbol`** (for example
+`R_duplicateAsResizable`, `R_MakeDelayedBinding`) when loading `data.table`,
+`magrittr`, etc. An R package was built against a different R than the conda R,
+because it came from `install.packages()`. Replace it with the conda build:
+
+```bash
+R -e 'remove.packages("data.table")'        # the offending package
+conda install -c conda-forge r-data.table -y
+```
+
+You can list any remaining broken packages from R with:
+
+```r
+for (p in rownames(installed.packages()))
+  tryCatch(loadNamespace(p),
+           error = function(e) cat("BROKEN:", p, "-", conditionMessage(e), "\n"))
+```
+
+**`reticulate` or `png` fail to compile from source.** Install the conda-forge
+binaries instead: `conda install -c conda-forge r-reticulate r-png -y`.
+
+**`SafetyError: The package ... appears to be corrupted`.** A cached conda
+package is damaged. Clean the cache and recreate the environment:
+
+```bash
+conda env remove -n r-pangoling -y
+conda clean --all -y
+```
+
+**`torch.cuda.is_available()` is `FALSE`.** A CPU-only wheel was installed, or
+the CUDA version does not match the driver. Reinstall `torch` with the matching
+`--index-url`.
+
+As a rule of thumb, in a conda R environment install compiled R packages from
+conda-forge (the `r-*` packages) and reserve `install.packages()` for pure-R
+packages such as `pangoling`.

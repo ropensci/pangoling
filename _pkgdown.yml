@@ -28,6 +28,7 @@ vignettes:
   - '`intro-bert`'
   - '`example`'
   - '`troubleshooting`'
+  - '`install-server-conda`'
 
 reference:
 - title: About

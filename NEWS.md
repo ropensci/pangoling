@@ -4,6 +4,8 @@
 - Discuss in the documentation how to deal with tokens as input of
 causal functions. #51
 - Added `cached_models()` and `removed_cached_model()` to return and remove the transformed models that are already installed.
+- Added a new vignette, "Installing pangoling on a server with conda", with a from-scratch recipe for headless/HPC servers. See `vignette("install-server-conda")`.
+
 
 # pangoling 1.0.3
 
